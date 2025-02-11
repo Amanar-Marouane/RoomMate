@@ -4,9 +4,6 @@ namespace core;
 
 use core\Middleware\Middleware;
 
-require_once __DIR__ . "/Functions.php";
-require_once __DIR__ . "/AutoLoader.php";
-
 class Router
 {
     private array $routes = [];
