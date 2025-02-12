@@ -178,6 +178,19 @@
         chatContainer.scrollTop = chatContainer.scrollHeight;
 
         let messageForm = document.querySelector(".message-form");
+
+        var conn = new WebSocket('ws://localhost:8080');
+
+        conn.onopen = function(e) {
+            console.log("WebSocket Connected!");
+        };
+
+        conn.onmessage = function(e) {
+            console.log("Message from server: ", e.data);
+            let message = JSON.parse(e.data);
+            redefine(message.user_id, message.content);
+        };
+
         messageForm.addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -188,21 +201,58 @@
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onload = function() {
                 if (xhr.status === 200) {
+                    let message = {
+                        content: content.value,
+                        user_id: <?= $user_id ?>,
+                    };
+
+                    conn.send(JSON.stringify(message));
+                    let messageElement = `
+                                    <div class="flex gap-2 items-start flex-col">
+                                        <div class="flex items-center justify-center">
+                                            <img src="<?= $photo ?>" alt="User" class="w-8 h-8 rounded-full mt-1">
+                                            <p class="font-bold text-l"><?= $user_src_name ?></p>
+                                        </div>
+                                        <div class="bg-gray-100 rounded-lg p-3 max-w-md">
+                                            <p>${content.value}</p>
+                                        </div>
+                                    </div>
+                                `;
+                    chatContainer.innerHTML += messageElement;
                     content.value = "";
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
                 }
             };
 
             xhr.send(JSON.stringify({
                 "content": content.value
             }));
-
-            var conn = new WebSocket('ws://localhost:8000/');
-            conn.onopen = function(e) {
-                console.log("Connection established!");
-            };
-            conn.onmessage = function(e) {
-                console.log(e.data);
-            };
         });
-    })
+
+        function redefine(id, content) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/message/redefine/<?= $user_id ?>', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    info = JSON.parse(xhr.response);
+                    let messageElement = `
+                                    <div class="flex gap-2 items-start flex-col">
+                                        <div class="flex items-center justify-center">
+                                            <img src="${info.photo}" alt="User" class="w-8 h-8 rounded-full mt-1">
+                                            <p class="font-bold text-l">${info.full_name}</p>
+                                        </div>
+                                        <div class="bg-gray-100 rounded-lg p-3 max-w-md">
+                                            <p>${content}</p>
+                                        </div>
+                                    </div>
+                                `;
+                    chatContainer.innerHTML += messageElement;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            };
+
+            xhr.send();
+        }
+    });
 </script>

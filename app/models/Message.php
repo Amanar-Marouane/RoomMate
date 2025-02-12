@@ -30,4 +30,9 @@ class Message
         $stmt = "INSERT INTO messages (user_src_id, user_dest_id, content) VALUES (?, ?, ?)";
         return $this->pdo->query($stmt, [1, $user_dest_id, $content]);
     }
+
+    public function redefine($user_id){
+        $stmt = "SELECT user_id, photo, full_name FROM users WHERE user_id = ?";
+        return $this->pdo->fetch($stmt, [$user_id]);
+    }
 }

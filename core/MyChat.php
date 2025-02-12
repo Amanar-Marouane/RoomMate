@@ -16,7 +16,9 @@ class MyChat implements MessageComponentInterface
 
     public function onOpen(ConnectionInterface $conn)
     {
+        // Store the new connection to send messages to later
         $this->clients->attach($conn);
+
         echo "New connection! ({$conn->resourceId})\n";
     }
 
@@ -54,8 +56,3 @@ class MyChat implements MessageComponentInterface
         $conn->close();
     }
 }
-
-$app = new \Ratchet\App('localhost', 8000);
-$app->route('/chat', new MyChat, array('*'));
-$app->route('/echo', new \Ratchet\Server\EchoServer, array('*'));
-$app->run();

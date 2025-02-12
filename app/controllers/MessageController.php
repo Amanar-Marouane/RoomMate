@@ -27,4 +27,9 @@ class MessageController
         $message = $data['content'];
         $this->linker->send($user_dest_id, $message);
     }
+
+    public function redefine($user_id){
+        $info = $this->linker->redefine($user_id);
+        echo json_encode($info);
+    }
 }

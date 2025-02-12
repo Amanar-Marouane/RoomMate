@@ -17,3 +17,4 @@ $router = new Router;
 $router->route("get", "profile", new UserController, "showProfile");
 $router->route("get", "message/{user_id}", new MessageController, "message");
 $router->route("post", "message/{user_id}", new MessageController, "send");
+$router->route("post", "message/redefine/{user_id}", new MessageController, "redefine");
