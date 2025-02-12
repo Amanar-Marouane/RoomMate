@@ -14,7 +14,7 @@ class UserController
     public function showProfile()
     {
         $user_id = $_SESSION["user_id"] ?? 1;
-        $info = $this->user->showProfile($user_id);
+        $info = $this->user->userInfo($user_id);
         extract($info);
         include __DIR__ . "/../views/profile.view.php";
     }
