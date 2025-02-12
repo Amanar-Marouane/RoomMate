@@ -18,4 +18,10 @@ class User
         $stmt = "SELECT * FROM users WHERE user_id = ?";
         return $this->pdo->fetch($stmt, [$user_id]);
     }
+
+    public function showAllUsers()
+    {
+        $stmt = "SELECT * FROM users";
+        return $this->pdo->fetchAll($stmt);
+    }
 }
