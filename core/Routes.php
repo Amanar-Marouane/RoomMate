@@ -14,4 +14,4 @@ $router = new Router;
 //nroutiw hna s'il vous plus :>
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //=>
-$router->route("get", "profile", "", new UserController, "showProfile");
+$router->route("get", "profile", new UserController, "showProfile");
