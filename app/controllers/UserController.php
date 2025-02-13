@@ -21,7 +21,7 @@ class UserController
     }
 
     // show login page 
-    public function showLogin()
+    public function showLogin($data = [])
     {
         include __DIR__ . '/../views/login.php';
     }
@@ -77,10 +77,10 @@ class UserController
                             }
                         }
                     } else {
-                        $data['login_err'] = 'Invalid password';
+                        $this->showLogin($data);
                     }
                 } else {
-                    $data['login_err'] = 'No user found with that email';
+                    $this->showLogin($data);
                 }
             
             }
@@ -90,7 +90,7 @@ class UserController
     }
 
     // show register page 
-    public function showRegister()
+    public function showRegister($data = [])
     {
           include __DIR__ . '/../views/register.php';
     }
@@ -121,7 +121,7 @@ class UserController
              ];
 
              //validate inputs
-             if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
+             if (empty(($data['username']) || ($data['email']) || ($data['password']) || ($data['origin_city']) || ($data['current_city']) || ($data['bio']))){
                 $data['empty_err'] = "All fields are required!";            
             } elseif (!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $data['username'])) {
                 $data['username_err'] = "Username must be 4-20 characters long and can only contain letters, numbers, and underscores.";
@@ -149,8 +149,8 @@ class UserController
                     die ('something went wrong');
                 }
             }
-            // load the view with errors
-            $this->showRegister();
+            $this->showRegister($data);
+            exit();
         }
         
     }

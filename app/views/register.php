@@ -23,6 +23,10 @@
                 </div>
                 <p id="signin_p">____ Please fill these informations ____</p>
                 <form action="/register" method="post">
+                
+                <?php if (!empty($data['exists_err'])): ?>
+                    <p class="error_msg"><?php echo $data['exists_err']; ?></p>
+                <?php endif; ?>
 
                 <?php if (!empty($data['empty_err'])): ?>
                     <p class="error_msg"><?php echo $data['empty_err']; ?></p>
@@ -115,11 +119,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- User exists error -->
-                    <?php if (!empty($data['exists_err'])): ?>
-                        <p class="error_msg"><?php echo $data['exists_err']; ?></p>
-                    <?php endif; ?>
 
                     <div style="display: flex;">
                         <button id="go_back" type="button" >◀ Go Back</button>
