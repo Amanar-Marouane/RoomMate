@@ -19,43 +19,56 @@ class User
         return $this->pdo->fetch($stmt, [$user_id]);
     }
 
+    // **************************************************************************************************************************************
+    public function showAllUsers()
+    {
+        $stmt = "SELECT * FROM users";
+        return $this->pdo->fetchAll($stmt);
+    }
+
+    // **************************************************************************************************************************************
+    public function updateStatus($status, $id_user)
+    {
+        $stmt = "UPDATE users SET status = ? WHERE user_id = ?";
+        return $this->pdo->query($stmt, [htmlspecialchars($status), $id_user]);
+    }
+    // **************************************************************************************************************************************
+
+    public function deleteUser($id_user)
+    {
+        $stmt = "DELETE FROM users WHERE user_id = ?";
+        return $this->pdo->query($stmt, [$id_user]);
+    }
     //login user
-    public function login($email){
-       $stmt = "SELECT * FROM users WHERE email = ?";
-       return $this->pdo->fetch($stmt, [$email]);
+    public function login($email)
+    {
+        $stmt = "SELECT * FROM users WHERE email = ?";
+        return $this->pdo->fetch($stmt, [$email]);
     }
 
     //check if user exists
-    public function userExists($username, $email){
-      $stmt = "SELECT * FROM users WHERE username = ? OR email = ?";
-      return $this->pdo->fetch($stmt, [$username, $email]);
-       
+    public function userExists($username, $email)
+    {
+        $stmt = "SELECT * FROM users WHERE full_name = ? OR email = ?";
+        return $this->pdo->fetch($stmt, [$username, $email]);
     }
 
-    //register new user
-    // public function registerUser($username, $email, $password, $role){
-    //    if($data['role'] == "tutor"){
-    //        $stmt = $this->pdo->query("INSERT INTO users (username, email, password, role, status) VALUES (:username, :email, :password, :role, 'active')");
-    //        $query->bindParam(":username", $data['username']);
-    //        $query->bindParam(":email", $data['email']);
-    //        $query->bindParam(":password", $data['password']);
-    //        $query->bindParam(":role", $data['role']);
-    //        $this->pdo->fetch($stmt, [$username, $email]);
-
-    //        if( $query->execute()){
-    //             return true;
-    //        }else{
-    //             return false;
-    //        }
-    //    }else{
-    //        $stmt = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
-    //        return $this->pdo->fetch($stmt, [$username, $email, $password, $role]);
-
-    //        if( $query->execute()){
-    //             return true;
-    //        }else{
-    //             return false;
-    //        }
-    //    }
-    // }
+    //register user
+    public function registerUser($username, $email, $password, $year_of_study, $origin_city, $current_city, $bio, $photo, $reference, $preferences)
+    { {
+            $stmt = "INSERT INTO users (full_name, email, password, year_of_study, origin_city, current_city, bio, photo, reference, preferences) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            return $this->pdo->query($stmt, [
+                $username,
+                $email,
+                $password,
+                $year_of_study,
+                $origin_city,
+                $current_city,
+                $bio,
+                $photo,
+                $reference,
+                $preferences
+            ]);
+        }
+    }
 }

@@ -22,3 +22,5 @@ document.addEventListener("DOMContentLoaded", function() {
         initialElements.forEach(el => { el.style.display = ""; });
     });
 });
+
+
