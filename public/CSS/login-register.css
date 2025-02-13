@@ -1,0 +1,240 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.singin_container{
+    display: flex;
+}
+
+.signin{
+    margin-left: 200px;
+}
+
+.side_image{
+    background-color: rgb(22 1 183);
+    width: 800px;
+    height: 100vh;
+}
+
+.side_image img{
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+
+.side_image_register{
+    background-color: rgb(22 1 183);
+    margin-left: 110px;
+    width: 900px;
+    height: 100vh;
+}
+
+.side_image_register img{
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+}
+.signin_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    
+}
+
+.signin_form input[type="email"],
+.signin_form input[type="password"] {
+    width: 350px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.input-container {
+    position: relative;
+    width: 350px;
+    margin: 10px 0;
+}
+
+.input-container .icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px 10px 10px 30px;
+    padding-left: 40px !important;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.122);
+}
+
+.signin_form p {
+    margin: 20px 0;
+    font-size: 13px;
+    font-family: "popins", sans-serif;
+    color: #555;
+}
+
+.signin_form button[type="submit"], #next {
+    background-color: rgb(17, 52, 181);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;;
+    font-family: "popins", sans-serif;
+    cursor: pointer;
+    display: inline-block;
+}
+
+
+.signin_form a[type="submit"]:hover, #next:hover{
+    background-color: rgb(9, 34, 125);
+}
+
+#next{
+    border: none;
+    font-family: "popins", sans-serif;
+    font-size: 15px;
+    width: 30%;
+    margin-left: 70%;
+    background-color: rgb(107, 107, 107);
+}
+
+h2 {
+    font-family: "Poppins", serif;
+    font-size: 34px;
+    margin-bottom: 40px;
+}
+h3{
+    font-family:  sans-serif;
+    font-style: normal;
+    color: rgba(79, 79, 79, 0.721);
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+h4{
+    font-family: sans-serif;
+    font-size: 14px;
+    color: rgba(79, 79, 79, 0.351);
+}
+
+#signin_p{
+    justify-self: center; margin-top: 40px; margin-bottom: 40px; color: rgba(38, 38, 38, 0.236)
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+form label {
+    align-self: flex-start;
+    font-size: 12px;
+    color: #555;
+    font-family: "Poppins", sans-serif;
+    margin-top: 20px;
+    margin-bottom: -5px;
+}
+
+#register_p{
+    font-family: "popins", sans-serif;
+}
+
+#register_a{
+    text-decoration: none;
+    color: rgb(17, 52, 181);
+}
+
+#register_a:hover{
+    color: rgb(14, 6, 93);
+}
+
+.additional_section{
+    display: flex;
+}
+
+.additional_1{
+    
+}
+
+.additional_2{
+    margin-left: 30px;
+}
+
+.additional_section input, textarea, select{
+    width: 80%;
+    height: 35px;
+}
+
+.additional_section textarea, select{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "popins", sans-serif;
+    padding-left: 40px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.122);
+}
+
+#submit_all{
+    background-color: rgb(17, 52, 181);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    font-family: "popins", sans-serif;
+    font-size: 15px;
+    width: 283px;
+    margin-left: 34%;
+}
+
+#go_back{
+    background-color: rgb(107, 107, 107);
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;;
+    cursor: pointer;
+    display: inline-block;
+    border: none;
+    font-family: "popins", sans-serif;
+    font-size: 14px;
+    width: 18%;
+}
+
+#submit_all:hover, #go_back:hover{
+    background-color: rgb(7, 27, 99);
+}
+
+.error_msg{
+    color: red !important;
+    font-size: 15px !important;
+    margin-top: -5px !important;
+}
+
+
+
