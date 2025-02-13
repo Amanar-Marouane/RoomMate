@@ -2,8 +2,7 @@
 
 namespace core;
 
-use app\controllers\UserController;
-use app\controllers\AdminController;
+use app\controllers\{UserController, AdminController};
 
 require_once __DIR__ . "/Functions.php";
 require_once __DIR__ . "/AutoLoader.php";
@@ -16,9 +15,5 @@ $router = new Router;
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //=>
 $router->route("get", "profile",  new UserController, "showProfile");
-
-
-
-
 // les routes de l'admin : 
 $router->route("get", "admin/users", new AdminController, "showViewUser");
