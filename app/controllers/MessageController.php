@@ -16,11 +16,13 @@ class MessageController
 
     public function message($user_id)
     {
+        if ($user_id == $_SESSION['user_id']) header("Location: /profile");
         $messages = $this->linker->get_chat($user_id, $_SESSION['user_id']);
         $person = $this->linker->redefine($user_id);
         extract($person, EXTR_PREFIX_ALL, "to");
         $person = $this->linker->redefine($_SESSION['user_id']);
         extract($person, EXTR_PREFIX_ALL, "my");
+        $history = $this->linker->conversations_history($_SESSION['user_id']);
         include __DIR__ . "/../views/message.view.php";
     }
 

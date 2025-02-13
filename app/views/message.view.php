@@ -33,9 +33,7 @@
             //     content: message.content
             // });
 
-            if (message.to_user_id === myUserId) {
-                redefine(message.user_id, message.content);
-            }
+            redefine(message.user_id, message.content);
         };
 
         messageForm.addEventListener("submit", function(event) {
@@ -85,7 +83,8 @@
 
         function redefine(id, content) {
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/message/redefine/" + myUserId, true);
+
+            xhr.open("POST", "/message/redefine/" + id, true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onload = function() {
@@ -122,68 +121,17 @@
 
         <div class="h-[600px] overflow-y-auto custom-scrollbar">
             <div class="space-y-4">
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Francis Jackson</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Harry May</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Carol Bennett</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Christian Jones</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Bryan Brooks</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Freddie Spencer</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Adam Campbell</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Julia Lane</h3>
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
-                    <img src="/api/placeholder/48/48" alt="User" class="w-12 h-12 rounded-full">
-                    <div>
-                        <h3 class="font-medium">Kathy Griffin</h3>
-                    </div>
-                </div>
+                <?php foreach ($history as $chat):
+                    extract($chat) ?>
+                    <a href="/message/<?= $user_dest_id ?>">
+                        <div class="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <img src="<?= $photo ?>" alt="User" class="w-12 h-12 rounded-full">
+                            <div>
+                                <h3 class="font-medium"><?= $user_dest_name ?></h3>
+                            </div>
+                        </div>
+                    </a>
+                <?php endforeach ?>
             </div>
         </div>
     </div>

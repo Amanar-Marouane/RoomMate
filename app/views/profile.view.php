@@ -5,7 +5,6 @@
         <div class="h-32 bg-gradient-to-r from-indigo-600 to-purple-600"></div>
         <div class="px-6 pb-6">
             <div class="flex items-end -mt-16 mb-6">
-                <!-- <img src="https://i.pinimg.com/736x/98/5f/df/985fdfd9d673d91bd830d4ab3e380341.jpg" alt="Profile" class="w-32 h-32 rounded-xl object-cover ring-4 ring-white"> -->
                 <img src="<?= $photo ?>" alt="Profile" class="w-32 h-32 rounded-xl object-cover ring-4 ring-white">
                 <div class="ml-6 mb-2">
                     <h1 class="text-2xl font-bold text-gray-900"><?= $full_name ?></h1>
