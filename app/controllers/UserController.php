@@ -63,7 +63,7 @@ class UserController
                     } else {
                         // set session variables and login the user
                         $_SESSION['user_id'] = $user['user_id'];
-                        $_SESSION['username'] = $user['username'];
+                        $_SESSION['username'] = $user['full_name'];
                         $_SESSION['role'] = $user['role'];
 
                             //redirect based on role
