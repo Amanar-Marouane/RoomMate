@@ -35,3 +35,10 @@ $router->route("get", "annonce", new AnnonceController, "showAnnonce");
 
 // $router->route("post", "annonce", new AnnonceController, "insertted");
 $router->route("post", "annonce", new AnnonceController, "ajoute_annonce");
+
+// route for showing refister
+$router->route("get", "register", new UserController, "showRegister");
+
+// route for processing register
+$router->route("post", "register", new UserController, "register");
+
