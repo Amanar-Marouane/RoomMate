@@ -2,7 +2,7 @@
 
 namespace core;
 
-use app\controllers\{MessageController, UserController, AdminController};
+use app\controllers\{MessageController, UserController, AdminController, AnnonceController};
 
 require_once __DIR__ . "/Functions.php";
 require_once __DIR__ . "/AutoLoader.php";
@@ -33,3 +33,6 @@ $router->route("get", "login", new UserController, "showLogin");
 
 // route for processing login
 $router->route("post", "login", new UserController, "login");
+$router->route("get", "annonce", new AnnonceController, "showAnnonce");
+// $router->route("post", "annonce", new AnnonceController, "insertted");
+$router->route("post", "annonce", new AnnonceController, "ajoute_annonce");
