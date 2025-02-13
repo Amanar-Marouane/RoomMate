@@ -1,0 +1,210 @@
+/* Import Google Fonts (Poppins) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff;
+  color: #000;
+}
+
+/* Header */
+header {
+  background-color: #fff;
+  padding: 20px 10%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  color: #6c63ff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.get-started {
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.get-started:hover {
+  background-color: #5548ff;
+  transform: scale(1.05);
+}
+
+/* Main Content */
+.property-container {
+  display: flex;
+  padding: 50px 10%;
+  gap: 40px;
+}
+
+/* Demand details */
+.property-details {
+  flex: 2;
+}
+
+.property-details h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.date {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* Contact Card */
+.contact-card {
+  flex: 1;
+  background-color: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.profile img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.profile h3 {
+  font-size: 18px;
+  color: #333;
+}
+
+.contact-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+.contact-card ul li {
+  margin-bottom: 10px;
+}
+
+.contact-btn {
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #5548ff;
+  transform: scale(1.05);
+}
+
+.report {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: auto;
+  transition: color 0.3s ease;
+}
+
+.report:hover {
+  color: #ff2e2e;
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background-color: #6c63ff;
+  color: #fff;
+  padding: 40px 10%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-content {
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.footer-content h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+footer nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+footer nav a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+  color: #ddd;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .property-container {
+    flex-direction: column;
+  }
+
+  .contact-card {
+    margin-top: 30px;
+  }
+
+  footer {
+    text-align: center;
+  }
+
+  footer nav {
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
