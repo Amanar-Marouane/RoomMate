@@ -7,7 +7,7 @@ class OfferController
 {
   public function ShowOffer()
   {
-    include __DIR__ . "/../views/demande.view.php";
+    include __DIR__ . "/../views/offer.view.php";
   }
 }
 

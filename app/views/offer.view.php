@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roomate</title>
-  <link rel="stylesheet" href="single-offre.css" />
+  <link rel="stylesheet" href="CSS/singleOffer.css">
+
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -22,11 +23,11 @@
       <!-- Image Group -->
       <div class="property-images">
         <div class="main-image">
-          <img src="offre-img/1.png" alt="Main Room" />
+          <img src="assets/offer3.png" alt="Main Room" />
         </div>
         <div class="side-images">
-          <img src="offre-img/2.png" alt="Office" />
-          <img src="offre-img/3.png" alt="Living Room" />
+          <img src="assets/offer1.png" alt="Office" />
+          <img src="assets/offer2.png" alt="Living Room" />
         </div>
       </div>
       
@@ -45,7 +46,7 @@
           </p>
         </div>
         <div class="contact-card">
-          <img src="offre-img/profile.png" alt="Hakim Jellaba" class="profile-img" />
+          <img src="assets/user-profile.png" alt="Hakim Jellaba" class="profile-img" />
           <h3>Hakim Jellaba</h3>
           <p class="age">FES - 23</p>
           <ul>
