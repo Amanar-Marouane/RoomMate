@@ -20,6 +20,10 @@ class AnnonceController
     {
         include __DIR__ . "/../views/Annonce.php";
     }
+    public function show_all_Annonce()
+    {
+        include __DIR__ . "/../views/liste.php";
+    }
 
 
 

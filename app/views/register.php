@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../public/CSS/login-register.css">
+    <link rel="stylesheet" href="CSS/login-register.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
     </style>
