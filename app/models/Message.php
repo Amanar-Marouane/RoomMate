@@ -36,4 +36,5 @@ class Message
         $stmt = "SELECT user_id, photo, full_name FROM users WHERE user_id = ?";
         return $this->pdo->fetch($stmt, [$user_id]);
     }
+
 }

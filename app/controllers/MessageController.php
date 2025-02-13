@@ -17,6 +17,10 @@ class MessageController
     public function message($user_id)
     {
         $messages = $this->linker->get_chat($user_id, $_SESSION['user_id']);
+        $person = $this->linker->redefine($user_id);
+        extract($person, EXTR_PREFIX_ALL, "to");
+        $person = $this->linker->redefine($_SESSION['user_id']);
+        extract($person, EXTR_PREFIX_ALL, "my");
         include __DIR__ . "/../views/message.view.php";
     }
 

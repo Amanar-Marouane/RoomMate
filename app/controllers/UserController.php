@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 
@@ -66,24 +67,22 @@ class UserController
                         $_SESSION['username'] = $user['full_name'];
                         $_SESSION['role'] = $user['role'];
 
-                            //redirect based on role
-                            if ($user['role'] === 'admin') {
-                                // $this->show();
-                                exit;
-                            } elseif ($user['role'] === 'student') {
-                                // $this->showHomepage();
-                                echo "welcome";
-                                exit;
-                            }
+                        //redirect based on role
+                        if ($user['role'] === 'admin') {
+                            // $this->show();
+                            exit;
+                        } elseif ($user['role'] === 'student') {
+                            header("Location: /profile");
+                            exit;
                         }
-                    } else {
-                        $data['login_err'] = 'Invalid password';
                     }
                 } else {
-                    $data['login_err'] = 'No user found with that email';
+                    $data['login_err'] = 'Invalid password';
                 }
-            
+            } else {
+                $data['login_err'] = 'No user found with that email';
             }
+        }
 
         //load view with errors
         include __DIR__ . '/../views/login.php';
@@ -92,17 +91,18 @@ class UserController
     // show register page 
     public function showRegister()
     {
-          include __DIR__ . '/../views/register.php';
+        include __DIR__ . '/../views/register.php';
     }
 
-    public function register(){
+    public function register()
+    {
         //check for post request
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //process form
-             //sanitize post data 
-             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            //sanitize post data 
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
-             $data =[
+            $data = [
                 'username' => trim($_POST['username']),
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password']),
@@ -118,11 +118,11 @@ class UserController
                 'email_err' => '',
                 'password_err' => '',
                 'exists_err' => '',
-             ];
+            ];
 
-             //validate inputs
-             if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
-                $data['empty_err'] = "All fields are required!";            
+            //validate inputs
+            if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
+                $data['empty_err'] = "All fields are required!";
             } elseif (!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $data['username'])) {
                 $data['username_err'] = "Username must be 4-20 characters long and can only contain letters, numbers, and underscores.";
             } elseif (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
@@ -132,31 +132,25 @@ class UserController
             }
 
             //check if user exists
-            if($this->user->userExists($data['username'], $data['email']) == true){
+            if ($this->user->userExists($data['username'], $data['email']) == true) {
                 $data['empty_err'] = "User already exists!";
             }
 
             //if there is no errors proceed to register 
-            if(empty($data['empty_err']) && empty($data['username_err']) && empty($data['email_err']) && empty($data['password_err'])){
+            if (empty($data['empty_err']) && empty($data['username_err']) && empty($data['email_err']) && empty($data['password_err'])) {
                 //hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 //register user
-                if($this->user->registerUser($data['username'], $data['email'], $data['password'], $data['year_of_study'], $data['origin_city'], $data['current_city'], $data['bio'], $data['photo'], $data['reference'], $data['preferences'])){
+                if ($this->user->registerUser($data['username'], $data['email'], $data['password'], $data['year_of_study'], $data['origin_city'], $data['current_city'], $data['bio'], $data['photo'], $data['reference'], $data['preferences'])) {
                     $this->showLogin();
                     exit;
-                }else{
-                    die ('something went wrong');
+                } else {
+                    die('something went wrong');
                 }
             }
             // load the view with errors
             $this->showRegister();
         }
-        
     }
-
-
-
-
-   
 }
