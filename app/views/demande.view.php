@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Roomate - Demand Page</title>
   <!-- Link to external CSS -->
-  <link rel="stylesheet" href="single-demande.css" />
+  <link rel="stylesheet" href="CSS/SingleDemande.css" />
   <!-- Font Awesome (for icons) -->
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -37,7 +37,7 @@
       <!-- Right side: User info card -->
       <div class="contact-card">
         <div class="profile">
-          <img src="demand-img/profile.png" alt="User photo" />
+          <img src="assets/user-profile.png" alt="User photo" />
           <h3>Hakim Jellaba</h3>
         </div>
         <ul>
