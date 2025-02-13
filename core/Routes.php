@@ -39,4 +39,6 @@ $router->route("get", "annonce", new AnnonceController, "showAnnonce");
 
 // $router->route("post", "annonce", new AnnonceController, "insertted");
 $router->route("post", "annonce", new AnnonceController, "ajoute_annonce");
-$router->route("get", "liste", new AnnonceController, "show_all_Annonce");
+$router->route("get", "liste", new AnnonceController, "showVannonce");
+$router->route("get", "liste", new AnnonceController, "details");
+

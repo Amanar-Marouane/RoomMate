@@ -25,19 +25,21 @@ use core\Db;
     $this->announce_type=$type;
 }
     abstract  public function create_annonce($studentid);
-    public function all_announce(){
-        // $query="SELECT announce.announce_id,announce.address,
-        // announce.localisation,announce.description,announce.available_at,announce_type,
-        // announce.budget,announce.regle_cohabitation,announce.criteres_colocataire,announce.capacite_accueil
-        // ,announce.equipements,announce.zones_souhaitees,announce.demand_type,
-        // announce.move_in_date,users.user_id,users.full_name  FROM announce JOIN users ON  announce.user_id=users.user_id";
+    public function all_announce($userid = 2){
+       
        $query=" SELECT a.announce_id, a.address, a.localisation, a.description, 
-       a.available_at, a.announce_type, a.budget, a.regle_cohabitation, 
+       a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
        a.criteres_colocataire, a.capacite_accueil, a.equipements, 
-       a.zones_souhaitees, a.demand_type, a.move_in_date, 
-       u.user_id, u.full_name  
+       a.zones_souhaitees, a.demand_type, a.move_in_date,
+       u.user_id, u.full_name , u.origin_city,u.photo
 FROM announce a 
-JOIN users u ON a.user_id = u.user_id";
+JOIN users u ON a.user_id = u.user_id WHERE u
+.user_id != ? ";
+  $db = $this->pdo;
+  $params = [$userid];
+   return $result=$db-> fetchAll($query, $params );
+
+
 
 
 

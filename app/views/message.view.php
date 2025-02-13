@@ -197,7 +197,7 @@
             let content = document.getElementById("content");
 
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/message/<?= $user_id ?>', true);
+            xhr.open('POST', '/message/0<?= $user_id ?>', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.onload = function() {
                 if (xhr.status === 200) {
