@@ -25,6 +25,7 @@ use core\Db;
     $this->announce_type=$type;
 }
     abstract  public function create_annonce($studentid);
+    
   
 
 

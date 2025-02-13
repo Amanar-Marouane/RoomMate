@@ -83,7 +83,7 @@ class Offer extends Announce
 
    
 
-    public function create_annonce($studentid = 1)
+    public function create_annonce($studentid)
     {
         try {
           
@@ -105,6 +105,8 @@ class Offer extends Announce
                 $this->criteres_colocataires,
                 $this->capacite_accueil,
                 $this->equipement
+                // $this->galorie
+                
             ];
 
             $db = $this->pdo;
@@ -127,15 +129,5 @@ class Offer extends Announce
             return "Erreur: " . $e->getMessage();
         }
     }
-
-    public function insert($file)
-    {
-        $query = "INSERT INTO galerie (photo) VALUES (?)";
-        $params = [$file];
-
-
-        $db = $this->pdo;
-
-        return $db->query($query, $params);
-    }
+  
 }

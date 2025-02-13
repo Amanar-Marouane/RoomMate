@@ -23,11 +23,50 @@ class AnnonceController
 
 
 
+    // public function insertted(array $photos)
+    // {
+    //     $upload_directory = "assets/";
+    //     $uploaded_photos = []; 
+
+    //     foreach ($photos["tmp_name"] as $index => $tmpName) {
+    //         if (!empty($tmpName)) {
+    //             $file_basename = pathinfo($photos["name"][$index], PATHINFO_FILENAME);
+    //             $file_extension = pathinfo($photos["name"][$index], PATHINFO_EXTENSION);
+    //             $new_image_name = $file_basename . '_' . date("Ymd_His") . '.' . $file_extension;
+    //             $target_file = $upload_directory . $new_image_name;
+
+    //             if (move_uploaded_file($tmpName, $target_file)) {
+    //                 $uploaded_photos[] = [
+
+    //                     "stored_name"   => $new_image_name,
+    //                     "path"          => $target_file,
+
+    //                 ];
+    //             } else {
+    //                 return ["error" => "Erreur lors de l'upload de l'image: " . $photos["name"][$index]];
+    //             }
+    //         }
+    //     }
+
+    //     return $uploaded_photos;
+    // }
     public function insertted(array $photos)
     {
         $upload_directory = "assets/";
-        $uploaded_photos = []; 
+        $uploaded_photos = [];
 
+        // Si il n'y a qu'un seul fichier, on convertit la structure pour qu'elle soit un tableau
+        if (!isset($photos["tmp_name"][0])) {
+            $photos = [
+                "tmp_name" => [$photos["tmp_name"]],
+                "name" => [$photos["name"]],
+                "type" => [$photos["type"]],
+                "error" => [$photos["error"]],
+                "size" => [$photos["size"]]
+            ];
+        }
+
+        // Traiter les fichiers
         foreach ($photos["tmp_name"] as $index => $tmpName) {
             if (!empty($tmpName)) {
                 $file_basename = pathinfo($photos["name"][$index], PATHINFO_FILENAME);
@@ -37,10 +76,8 @@ class AnnonceController
 
                 if (move_uploaded_file($tmpName, $target_file)) {
                     $uploaded_photos[] = [
-                       
-                        "stored_name"   => $new_image_name,
-                        "path"          => $target_file,
-                       
+                        "stored_name" => $new_image_name,
+                        "path" => $target_file,
                     ];
                 } else {
                     return ["error" => "Erreur lors de l'upload de l'image: " . $photos["name"][$index]];
@@ -50,6 +87,7 @@ class AnnonceController
 
         return $uploaded_photos;
     }
+
 
 
 
@@ -80,14 +118,14 @@ class AnnonceController
 
             $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
             $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
-            $galarie = isset($_FILES['images']) ? $_FILES['images'] : null;
-
-            $galories = $this->insertted($galarie);
-
-
+            
+            
             if (!empty($type)) {
                 if ($type === "Offre") {
                     echo "Ceci est une offre.";
+                    $galarie = isset($_FILES['images']) ? $_FILES['images'] : null;
+        
+                    $galories = $this->insertted($galarie);
                     $result = $this->offer->setAttribut(
                         $type,
                         $localisation,
@@ -102,10 +140,11 @@ class AnnonceController
                         $galories
                     );
 
-                    
-                    var_dump($galories);
 
-                    $annonce = $this->offer->create_annonce();
+                    var_dump($galories);
+                    $studentid=$_SESSION['user_id'];
+
+                    $annonce = $this->offer->create_annonce($studentid);
                 } else {
                     echo "Ceci est une demande.";
                     echo " annonce" . $type;
@@ -121,7 +160,8 @@ class AnnonceController
                         $demand_type,
                         $move_in_date
                     );
-                    $annonce = $this->demand->create_annonce();
+                    $studentid=$_SESSION['user_id'];
+                    $annonce = $this->demand->create_annonce($studentid);
                 }
             } else {
                 echo "Le type d'annonce est invalide.";

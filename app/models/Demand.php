@@ -61,7 +61,7 @@ class Demand extends Announce
     ];
   }
 
-  public function create_annonce($studentid = 1)
+  public function create_annonce($studentid)
   {
 
 
