@@ -23,17 +23,8 @@ class UserController
     // show login page 
     public function showLogin()
     {
-        $data = [
-            'email' => '',
-            'password' => '',
-            'login_err' => '',
-            'email_err' => '',
-            'password_err' => ''
-        ];
-
         include __DIR__ . '/../views/login.php';
     }
-
 
     // process the login form
     public function login(){    
@@ -79,10 +70,10 @@ class UserController
 
                             //redirect based on role
                             if ($user['role'] === 'admin') {
-                                header('location: ../../public/views/admin.php');
+                                // $this->show();
                                 exit;
                             } elseif ($user['role'] === 'student') {
-                                // header('location: ../../public/views/homepage.php');
+                                // $this->showHomepage();
                                 echo "welcome";
                                 exit;
                             }
@@ -100,6 +91,12 @@ class UserController
             include __DIR__ . '/../views/login.php';
     }
 
+    // show register page 
+    public function showRegister()
+    {
+          include __DIR__ . '/../views/register.php';
+    }
+
     public function register(){
         //check for post request
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -108,20 +105,25 @@ class UserController
              $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
              $data =[
-                 'username' => trim($_POST['username']),
-                 'email' => trim($_POST['email']),
-                 'password' => trim($_POST['password']),
-                 'role' => trim($_POST['role']),
-                 'empty_err' => '',
-                 'username_err' => '',
-                 'email_err' => '',
-                 'password_err' => '',
-                 'role_err' => '',
-                 'exists_err' => '',
+                'username' => trim($_POST['username']),
+                'email' => trim($_POST['email']),
+                'password' => trim($_POST['password']),
+                'year_of_study' => trim($_POST['year_of_study']),
+                'origin_city' => trim($_POST['origin_city']),
+                'current_city' => trim($_POST['current_city']),
+                'bio' => trim($_POST['bio']),
+                'photo' => null,
+                'reference' => trim($_POST['reference']),
+                'preferences' => isset($_POST['preferences']) ? json_encode($_POST['preferences'], true) : '', // Convert preferences array to JSON string
+                'empty_err' => '',
+                'username_err' => '',
+                'email_err' => '',
+                'password_err' => '',
+                'exists_err' => '',
              ];
 
              //validate inputs
-             if (empty($data['username']) || empty($data['email']) || empty($data['password']) || empty($data['role'])) {
+             if (empty($data['username']) || empty($data['email']) || empty($data['password'])) {
                 $data['empty_err'] = "All fields are required!";            
             } elseif (!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $data['username'])) {
                 $data['username_err'] = "Username must be 4-20 characters long and can only contain letters, numbers, and underscores.";
@@ -129,46 +131,30 @@ class UserController
                 $data['email_err'] = "Invalid email address.";
             } elseif (strlen($data['password']) < 8 || !preg_match('/[A-Za-z]/', $data['password']) || !preg_match('/[0-9]/', $data['password']) || !preg_match('/[@$!%*?&#]/', $data['password'])) {
                 $data['password_err'] = "Password must be at least 8 characters long and include letters, numbers, and special characters.";
-            } elseif (empty($data['role'])) {
-                $data['role_err'] = "Please select a role.";
             }
 
             //check if user exists
             if($this->user->userExists($data['username'], $data['email']) == true){
                 $data['empty_err'] = "User already exists!";
-                $this->view('users/register', $data);
             }
 
             //if there is no errors proceed to register 
-            if(empty($data['empty_err']) && empty($data['username_err']) && empty($data['email_err']) && empty($data['password_err']) && empty($data['role_err'])){
+            if(empty($data['empty_err']) && empty($data['username_err']) && empty($data['email_err']) && empty($data['password_err'])){
                 //hash password
                 $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
                 //register user
-                if($this->user->registerUser($data)){
-                    header('location: '.URLROOT.'/users/login');
-
-                }else
+                if($this->user->registerUser($data['username'], $data['email'], $data['password'], $data['year_of_study'], $data['origin_city'], $data['current_city'], $data['bio'], $data['photo'], $data['reference'], $data['preferences'])){
+                    $this->showLogin();
+                    exit;
+                }else{
                     die ('something went wrong');
-
-            
-            }else{
-                    // echo "failed";
-                    header('location: ../../public/views/login.php');
                 }
-
-        }else{
-            $data =[
-                'username' => '',
-                'email' => '',
-                'password' => '',
-                'role' => '',
-                'register_err' => '',
-            ];
-
-            //load view of register form
-            header('location: ../../public/views/register.php');
+            }
+            // load the view with errors
+            $this->showRegister();
         }
+        
     }
 
 
