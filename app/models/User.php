@@ -13,12 +13,13 @@ class User
         $this->pdo = Db::getInstance();
     }
 
-    public function showProfile($user_id)
+    public function userInfo($user_id)
     {
         $stmt = "SELECT * FROM users WHERE user_id = ?";
         return $this->pdo->fetch($stmt, [$user_id]);
     }
 
+<<<<<<< HEAD
     // **************************************************************************************************************************************
     public function showAllUsers()
     {
@@ -39,4 +40,45 @@ class User
         $stmt = "DELETE FROM users WHERE user_id = ?";
         return $this->pdo->query($stmt, [$id_user]);
     }
+=======
+    //login user
+    public function login($email){
+       $stmt = "SELECT * FROM users WHERE email = ?";
+       return $this->pdo->fetch($stmt, [$email]);
+    }
+
+    //check if user exists
+    public function userExists($username, $email){
+      $stmt = "SELECT * FROM users WHERE username = ? OR email = ?";
+      return $this->pdo->fetch($stmt, [$username, $email]);
+       
+    }
+
+    //register new user
+    // public function registerUser($username, $email, $password, $role){
+    //    if($data['role'] == "tutor"){
+    //        $stmt = $this->pdo->query("INSERT INTO users (username, email, password, role, status) VALUES (:username, :email, :password, :role, 'active')");
+    //        $query->bindParam(":username", $data['username']);
+    //        $query->bindParam(":email", $data['email']);
+    //        $query->bindParam(":password", $data['password']);
+    //        $query->bindParam(":role", $data['role']);
+    //        $this->pdo->fetch($stmt, [$username, $email]);
+
+    //        if( $query->execute()){
+    //             return true;
+    //        }else{
+    //             return false;
+    //        }
+    //    }else{
+    //        $stmt = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
+    //        return $this->pdo->fetch($stmt, [$username, $email, $password, $role]);
+
+    //        if( $query->execute()){
+    //             return true;
+    //        }else{
+    //             return false;
+    //        }
+    //    }
+    // }
+>>>>>>> 0d711b2a02c274a4a3df2f6072cd439fbc931233
 }
