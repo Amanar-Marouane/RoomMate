@@ -50,6 +50,10 @@
                     <p class="error_msg"><?php echo $data['email_err']; ?></p>
                 <?php endif; ?>
 
+                <?php if (!empty($data['domain_err'])): ?>
+                    <p class="error_msg"><?php echo $data['domain_err']; ?></p>
+                <?php endif; ?>
+
                 <label for="password">Password</label>
                 <div class="input-container">
                     <i class="fa fa-lock icon"></i>

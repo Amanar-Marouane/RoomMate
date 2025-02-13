@@ -118,10 +118,19 @@ class UserController
                 'email_err' => '',
                 'password_err' => '',
                 'exists_err' => '',
+                'domain_err' => '',
              ];
 
-             //validate inputs
-             if (empty(($data['username']) || ($data['email']) || ($data['password']) || ($data['origin_city']) || ($data['current_city']) || ($data['bio']))){
+            // Validate email domain
+            if (!empty($data['email'])) {
+                $emailDomain = substr(strrchr($data['email'], "@"), 1);
+                if ($emailDomain !== 'youcode.ma') {
+                    $data['domain_err'] = 'Please use a valid email address: "...@youcode.ma"';
+                }
+            }
+
+            //validate inputs
+            if (empty(($data['username']) || ($data['email']) || ($data['password']) || ($data['origin_city']) || ($data['current_city']) || ($data['bio'])) || ($data['domain_err'])){
                 $data['empty_err'] = "All fields are required!";            
             } elseif (!preg_match('/^[a-zA-Z0-9_]{4,20}$/', $data['username'])) {
                 $data['username_err'] = "Username must be 4-20 characters long and can only contain letters, numbers, and underscores.";
