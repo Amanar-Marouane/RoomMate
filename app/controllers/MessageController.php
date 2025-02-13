@@ -14,9 +14,9 @@ class MessageController
         $this->linker = new Message;
     }
 
-    public function message($user_id = 2)
+    public function message($user_id)
     {
-        $messages = $this->linker->get_chat($user_id);
+        $messages = $this->linker->get_chat($user_id, $_SESSION['user_id']);
         include __DIR__ . "/../views/message.view.php";
     }
 
@@ -28,7 +28,8 @@ class MessageController
         $this->linker->send($user_dest_id, $message);
     }
 
-    public function redefine($user_id){
+    public function redefine($user_id)
+    {
         $info = $this->linker->redefine($user_id);
         echo json_encode($info);
     }
