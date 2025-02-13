@@ -1,0 +1,265 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Header */
+header {
+  background-color: #000;
+  padding: 20px 10%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  color: #6c63ff;
+  font-weight: 700;
+}
+
+.get-started {
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Property Section */
+.property {
+  padding: 50px 10%;
+}
+
+/* Image Group */
+.property-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* The two side images are stacked vertically */
+.side-images {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+}
+
+.side-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Description and Contact Card */
+.property-info {
+  display: flex;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.property-details {
+  flex: 2;
+}
+
+.date {
+  font-style: italic;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.property-details h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.rooms {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* Contact Card (unchanged as per your note) */
+.contact-card {
+  flex: 1;
+  background-color: #222;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.contact-card img.profile-img {
+  width: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.contact-card h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.contact-card .age {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.contact-card ul {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.contact-card ul li {
+  margin-bottom: 8px;
+}
+
+.contact-btn {
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.report {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  background-color: #0a0a2a;
+  padding: 40px 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-content h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: #6c63ff;
+}
+
+footer nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer nav a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  /* Stack the property-info vertically */
+  .property-info {
+    flex-direction: column;
+  }
+  
+  /* Adjust image group: stack side images below main image */
+  .property-images {
+    grid-template-columns: 1fr;
+  }
+  
+  .side-images {
+    grid-template-rows: unset;
+    grid-auto-flow: column;
+  }
+  
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  footer nav {
+    margin-top: 20px;
+  }
+}
+
+
+
+
+/* Button Hover Effect */
+.get-started:hover,
+.contact-btn:hover {
+  background-color: #5548ff;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+/* Image Hover Effect */
+.property-images img {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.property-images img:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* Contact Card Hover Effect */
+.contact-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.contact-card:hover {
+  box-shadow: 0px 0px 20px rgba(108, 99, 255, 0.5);
+}
+
+/* Footer Links Hover Effect */
+footer nav a {
+  transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+  color: #6c63ff;
+  text-decoration: underline;
+}
+
+/* Report Link Hover Effect */
+.report {
+  transition: color 0.3s ease;
+}
+
+.report:hover {
+  color: #ff4747;
+  text-decoration: underline;
+}
