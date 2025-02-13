@@ -19,7 +19,6 @@ class User
         return $this->pdo->fetch($stmt, [$user_id]);
     }
 
-<<<<<<< HEAD
     // **************************************************************************************************************************************
     public function showAllUsers()
     {
@@ -40,7 +39,6 @@ class User
         $stmt = "DELETE FROM users WHERE user_id = ?";
         return $this->pdo->query($stmt, [$id_user]);
     }
-=======
     //login user
     public function login($email){
        $stmt = "SELECT * FROM users WHERE email = ?";
@@ -80,5 +78,4 @@ class User
     //        }
     //    }
     // }
->>>>>>> 0d711b2a02c274a4a3df2f6072cd439fbc931233
 }
