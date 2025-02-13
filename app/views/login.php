@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../public/CSS/login-register.css">
+    <link rel="stylesheet" href="CSS/login-register.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
     </style>
@@ -15,7 +15,7 @@
 <body>
     <div class="singin_container">
         <div class="side_image">
-            <img src="../../public/assets/img/rommate.png" alt="">
+            <img src="../assets/rommate.png" alt="">
         </div>
         <div class="signin_form">
             <div class="signin">
@@ -32,7 +32,7 @@
                     <input type="email" name="email" >
                 </div>
                 <?php if (!empty($data['email_err'])): ?>
-                   <p class="error"><?php echo $data['email_err']; ?></p>
+                   <p class="error_msg"><?php echo $data['email_err']; ?></p>
                 <?php endif; ?>
 
                 <label for="password">Password</label>
@@ -41,16 +41,16 @@
                     <input type="password" name="password" >
                 </div>
                 <?php if(!empty($data['password_err'])): ?>
-                    <p class="error"><?php echo $data['password_err']; ?></p>
+                    <p class="error_msg"><?php echo $data['password_err']; ?></p>
                 <?php endif; ?>
 
                 <?php if (!empty($data['login_err'])): ?>
-                    <p class="error"><?php echo $data['login_err']; ?></p>
+                    <p class="error_msg"><?php echo $data['login_err']; ?></p>
                 <?php endif; ?>
 
                 <button type="submit" name="submit">Log in</button>
                 </form>
-                <p id="register_p">Not registered yet? <a id="register_a" href="">Create your account now</a></p>
+                <p id="register_p">Not registered yet? <a id="register_a" href="/regiter">Create your account now</a></p>
             </div>
         </div>
     </div>

@@ -230,5 +230,11 @@ form label {
     background-color: rgb(7, 27, 99);
 }
 
+.error_msg{
+    color: red !important;
+    font-size: 15px !important;
+    margin-top: -5px !important;
+}
+
 
 

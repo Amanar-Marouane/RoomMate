@@ -109,11 +109,11 @@
         </div>
 
         <div class="side_image_register">
-            <img src="../../public/assets/img/rommate.png" alt="">
+            <img src="../assets/rommate.png" alt="">
         </div>
     </div>
 
-    <script src="../../public/JS/register.js"></script>
+    <script src="../JS/register.js"></script>
 </body>
 
 </html>
