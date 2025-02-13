@@ -1,7 +1,7 @@
 
 
 
-<!-- <?php include __DIR__ . "/../partials/header.view.php" ?> -->
+<?php include __DIR__ . "/../partials/header.view.php" ?>
 
 
 
@@ -192,4 +192,4 @@
 </main>
 
 
-<!-- <?php include __DIR__ . "/../partials/footer.view.php" ?> -->
+<?php include __DIR__ . "/../partials/footer.view.php" ?>
