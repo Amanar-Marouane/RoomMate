@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   radios.forEach((radio) => {
     radio.addEventListener("change", function () {
-      if (this.value === "offer") {
+      if (this.value === "Offre") {
         container.innerHTML = `
 
  <label for="">Capacité d'accueil * *</label>
