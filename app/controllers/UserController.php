@@ -1,6 +1,6 @@
 <?php
-
 namespace app\controllers;
+
 
 use app\models\User;
 
@@ -11,6 +11,7 @@ class UserController
     {
         $this->user = new User;
     }
+
     public function showProfile()
     {
         $user_id = $_SESSION["user_id"] ?? 1;
@@ -19,7 +20,6 @@ class UserController
         include __DIR__ . "/../views/profile.view.php";
     }
 
-
     // show login page 
     public function showLogin()
     {
@@ -27,9 +27,10 @@ class UserController
     }
 
     // process the login form
-    public function login(){    
+    public function login()
+    {
         //process form
-        $data =[
+        $data = [
             'email' => trim($_POST['email']),
             'password' => trim($_POST['password']),
             'login_err' => '',
@@ -48,25 +49,22 @@ class UserController
             $data['password_err'] = 'Please enter your password';
         }
         //if there is no errors
-        if(empty($data['login_err']) && empty($data['password_err'])){
+        if (empty($data['login_err']) && empty($data['password_err'])) {
             //login user
             $user = $this->user->login($data['email']);
 
-                //check if user exists
-                if ($user) {
-                    //verify the password
-                    if (password_verify($data['password'], $user['password'])){
-                        //check user status
-                        if ($user['status'] === 'desactive') {
-                            $data['login_err'] = 'Inactive user. Please verify your email';
-                        }
-                        
-                        else{
-                            // set session variables and login the user
-                            session_start();
-                            $_SESSION['user_id'] = $user['user_id'];
-                            $_SESSION['username'] = $user['username'];
-                            $_SESSION['role'] = $user['role'];
+            //check if user exists
+            if ($user) {
+                //verify the password
+                if (password_verify($data['password'], $user['password'])) {
+                    //check user status
+                    if ($user['status'] === 'desactive') {
+                        $data['login_err'] = 'Inactive user. Please verify your email';
+                    } else {
+                        // set session variables and login the user
+                        $_SESSION['user_id'] = $user['user_id'];
+                        $_SESSION['username'] = $user['username'];
+                        $_SESSION['role'] = $user['role'];
 
                             //redirect based on role
                             if ($user['role'] === 'admin') {
@@ -87,8 +85,8 @@ class UserController
             
             }
 
-            //load view with errors
-            include __DIR__ . '/../views/login.php';
+        //load view with errors
+        include __DIR__ . '/../views/login.php';
     }
 
     // show register page 
