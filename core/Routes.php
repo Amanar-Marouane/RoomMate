@@ -2,7 +2,7 @@
 
 namespace core;
 
-use app\controllers\{MessageController, UserController};
+use app\controllers\{MessageController, OfferController, UserController};
 
 require_once __DIR__ . "/Functions.php";
 require_once __DIR__ . "/AutoLoader.php";
@@ -23,3 +23,6 @@ $router->route("get", "login", new UserController, "showLogin");
 
 // route for processing login
 $router->route("post", "login", new UserController, "login");
+
+// route for showing single offer page
+$router->route("get", "offer", new OfferController, "ShowOffer");
