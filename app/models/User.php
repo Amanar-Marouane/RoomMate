@@ -18,4 +18,10 @@ class User
         $stmt = "SELECT * FROM users WHERE user_id = ?";
         return $this->pdo->fetch($stmt, [$user_id]);
     }
+
+    //login user
+    public function login($email){
+       $stmt = $this->pdo->query("SELECT * FROM users WHERE email = :email");
+       return $this->pdo->fetch($stmt, [$email]);
+    }
 }
