@@ -21,6 +21,6 @@ function messagesHandler()
 
 function request_method()
 {
-    if ($_POST["method"]) return $_POST["method"];
+    if (isset($_POST["method"])) return $_POST["method"];
     return $_SERVER['REQUEST_METHOD'];
 }
