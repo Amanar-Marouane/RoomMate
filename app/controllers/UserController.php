@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+
 use app\models\User;
 
 class UserController
