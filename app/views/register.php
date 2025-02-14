@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+
     <link rel="stylesheet" href="CSS/login-register.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
@@ -109,12 +114,12 @@
                                 </select>
                             </div>
                             <label for="preferences">Preferences</label>
-                            <div class="input-container">
-                                <select name="preferences[]" id="preferences" required >
+                            <div class="input-container" id="preferences_box">
+                                <select name="preferences[]" id="preferences" multiple required >
                                     <option value=""></option>
-                                    <option value="1">Smoking</option>
-                                    <option value="2">Animal Lover</option>
-                                    <option value="3">Hospitable</option>
+                                    <option value="Smoking">Smoking</option>
+                                    <option value="Animal Lover">Animal Lover</option>
+                                    <option value="Hospitable">Hospitable</option>
                                 </select>
                             </div>
                             <label for="reference">Reference</label>
