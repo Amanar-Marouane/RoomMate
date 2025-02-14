@@ -63,7 +63,11 @@ $router->route("post", "register", new UserController, "register");
 
 
 // route for showing single offer page
-$router->route("get", "offer", new OfferController, "ShowOffer");
+// $router->route("get", "offer", new OfferController, "ShowOffer");
 
 // route for showing single offer page
-$router->route("get", "demande", new DemandeController, "ShowDemande");
+// $router->route("get", "demande", new DemandeController, "ShowDemande");
+
+$router->route("get", "demande", new AnnonceController, "getdemande");
+$router->route("get", "offer", new AnnonceController, "getOffer");
+// $router->route("get","offer", new AnnonceController, " getphotos");

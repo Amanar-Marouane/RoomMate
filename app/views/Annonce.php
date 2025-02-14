@@ -24,7 +24,7 @@
 
                 <div class="toggle-buttons">
                     <label class="radio-label">
-                        <input type="radio" name="type" value="Demande" />
+                        <input type="radio" name="type" value="Demande" checked />
                         <span class="radio-btn">Demand</span>
                     </label>
                     <label class="radio-label">

@@ -111,9 +111,6 @@ class UserController
         exit();
         }
 
-
-
-
     // register
     public function register()
     {

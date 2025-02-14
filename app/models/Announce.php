@@ -15,6 +15,7 @@ abstract class Announce
     protected $available_at;
     protected $announce_type;
     protected $pdo;
+    protected $title;
 
 
     public function __construct($type, $localisation, $address, $description, $budget, $available_at)
@@ -28,18 +29,17 @@ abstract class Announce
         $this->announce_type = $type;
     }
     abstract  public function create_annonce($studentid);
-
     public function all_announce($userid)
     {
 
-        $query = " SELECT a.announce_id, a.title, a.address, a.localisation, a.description, 
+        $query = " SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
                     a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
                     a.criteres_colocataire, a.capacite_accueil, a.equipements, 
                     a.zones_souhaitees, a.demand_type, a.move_in_date,
                     u.user_id, u.full_name , u.origin_city,u.photo
                     FROM announce a 
                     JOIN users u ON a.user_id = u.user_id WHERE u
-                    .user_id != ? ";
+                    .user_id != ?";
         $db = $this->pdo;
         $params = [$userid];
         return $result = $db->fetchAll($query, $params);
@@ -50,4 +50,5 @@ abstract class Announce
         $stmt = "SELECT * FROM announce";
         return $this->pdo->fetchAll($stmt);
     }
+    
 }

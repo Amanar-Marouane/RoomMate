@@ -22,34 +22,52 @@
   <!-- Main Content -->
   <main>
     <div class="property-container">
+    <?php foreach( $demandes as $demande) :?>
+
       <!-- Left side: Demand details -->
       <div class="property-details">
-        <h2>Demande residential home appartement</h2>
-        <p class="date">12 November 2021</p>
+        <h2><?php echo $demande['title']?> </h2>
+        <p class="date"><?php 
+    echo date("d F Y", strtotime($demande['created_at'] ?? 'now')); 
+?>
+</p>
         <p class="description">
-          Situé dans un quartier populaire de la médina, le riad Dar Mata vous fera vivre une vraie
+          <!-- Situé dans un quartier populaire de la médina, le riad Dar Mata vous fera vivre une vraie
           expérience dans la vie des marrakchis. La maison est conçue, très équipée et le confort est
           assuré pour des séjours de courte durée. Vous aurez accès à la cuisine où la composition des
-          dîners se boit paisiblement. Les chambres sont toutes bien privatisées pour votre confort.
+          dîners se boit paisiblement. Les chambres sont toutes bien privatisées pour votre confort. -->
+          <?php echo $demande['description']?>
         </p>
       </div>
 
       <!-- Right side: User info card -->
       <div class="contact-card">
         <div class="profile">
-          <img src="assets/user-profile.png" alt="User photo" />
-          <h3>Hakim Jellaba</h3>
+          <img src="/<?= $announce['photo'] ?>" alt="User photo" />
+          <h3><?php echo $demande['full_name']?></h3>
         </div>
         <ul>
-          <li><i class="fas fa-wallet"></i> Budget: <strong>800 DH</strong></li>
-          <li><i class="fas fa-city"></i> City: <strong>Safi</strong></li>
-          <li><i class="fas fa-calendar-alt"></i> Availability: <strong>Immediately</strong></li>
-          <li><i class="fas fa-door-open"></i> Room Type: <strong>Shared</strong></li>
+          <li><i class="fas fa-wallet"></i> Budget: <strong><?php echo $demande['budget']?> DH</strong></li>
+          <li><i class="fas fa-city"></i> City: <strong><?php echo $demande['localisation']?></strong></li>
+          <li><i class="fas fa-calendar-alt"></i> Date d'emménagement: <strong><?php echo $demande['move_in_date']?></strong></li>
+          <li><i class="fas fa-door-open"></i> demand Type: <strong><?php echo $demande['demand_type']?></strong></li>
+          <li><i class="fas fa-door-open"></i> zones_souhaitees: <strong><?php echo $demande['zones_souhaitees']?></strong></li>
         </ul>
-        <button class="contact-btn">Contact Hakim</button>
+        <button class="contact-btn">Contact <?php  echo $demande['full_name']?></button>
         <p class="report"><i class="fas fa-flag"></i> Report this demand</p>
+        <!-- Bouton de contact -->
+
+
+
+<!-- Formulaire de signalement -->
+
+
+</form>
+
+        
       </div>
     </div>
+ <?php endforeach;?>
   </main>
 
   <!-- Footer -->
