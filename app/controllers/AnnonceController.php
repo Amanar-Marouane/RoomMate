@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Offer;
-use app\models\Demand;
+use app\models\{Offer, Demand};
+use Exception;
 
 class AnnonceController
 {
@@ -101,7 +101,7 @@ class AnnonceController
 
         if (isset($_POST['ajouter'])) {
 
-          
+
 
             $title = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
@@ -124,7 +124,7 @@ class AnnonceController
 
             $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
             $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
-
+            $studentid = $_SESSION['user_id'];
 
             if (!empty($type)) {
                 if ($type === "Offre") {
@@ -147,11 +147,6 @@ class AnnonceController
                         $title
                     );
 
-
-                    print_r($galories);
-                    $studentid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
-
-
                     $annonce = $this->offer->create_annonce($studentid);
                 } else {
                     echo "Ceci est une demande.";
@@ -166,10 +161,9 @@ class AnnonceController
                         $available_at,
                         $zones_souhaitees,
                         $demand_type,
-                        $move_in_date,$title
+                        $move_in_date,
+                        $title
                     );
-                    $studentid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
-
                     $annonce = $this->demand->create_annonce($studentid);
                 }
             } else {
@@ -179,14 +173,55 @@ class AnnonceController
             echo "nothing";
         }
     }
+
+    public function searchAnnounce()
+    {
+        $json = file_get_contents("php://input");
+        $data = json_decode($json, true);
+
+        $title = $data["title"];
+        $budget = $data["budget"];
+        $city = $data["city"];
+        $available_at = $data["available_at"];
+        $type = $data["type"];
+
+        header('Content-Type: application/json');
+
+        $results = $this->demand->searchAnnounce($title, $budget, $city, $available_at, $type);
+
+        $cleanResults = [];
+        foreach ($results as $row) {
+            $cleanResults[] = [
+                'announce_id' => $row['announce_id'],
+                'user_id' => $row['user_id'],
+                'full_name' => $row['full_name'],
+                'title' => $row["title"],
+                'photo' => $row['photo'],
+                'origin_city' => $row['origin_city'],
+                'localisation' => $row['localisation'],
+                'budget' => $row['budget'],
+                'available_at' => $row['available_at'],
+                'announce_type' => $row['announce_type']
+            ];
+        }
+
+        $json = json_encode([
+            'data' => $cleanResults,
+            'count' => count($cleanResults)
+        ], JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE);
+
+        if ($json === false) {
+            throw new Exception(json_last_error_msg());
+        }
+
+        echo $json;
+    }
+
+
     public function showVannonce()
     {
-        $userid= isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
-
-
-        $announces = $this->offer->all_announce($userid);
+        $announces = $this->offer->all_announce($_SESSION['user_id']);
         extract($announces);
-
 
         include __DIR__ . "/../views/liste.php";
     }
@@ -209,7 +244,7 @@ class AnnonceController
             die("Erreur: La demande n'est pas un tableau associatif.");
         }
 
-          extract($galaries);
+        extract($galaries);
 
 
 
@@ -218,6 +253,7 @@ class AnnonceController
 
         include __DIR__ . "/../views/offer.view.php";
     }
+    
     public function getdemande()
     {
         $announce_id = $_GET['demand_id'];

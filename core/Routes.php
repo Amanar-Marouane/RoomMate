@@ -17,6 +17,11 @@ $router = new Router;
 // route for showing refister
 $router->route("get", "register", new UserController, "showRegister");
 
+
+$router->route("get", "home", new UserController, "showHomePage");
+
+
+
 // route for processing register
 $router->route("post", "register", new UserController, "register");
 $router->route("get", "profile", new UserController, "showProfile");
@@ -46,6 +51,7 @@ $router->route("get", "annonce", new AnnonceController, "showAnnonce");
 // $router->route("post", "annonce", new AnnonceController, "insertted");
 $router->route("post", "annonce", new AnnonceController, "ajoute_annonce");
 $router->route("get", "liste", new AnnonceController, "showVannonce");
+$router->route("post", "announces/search", new AnnonceController, "searchAnnounce");
 $router->route("get", "liste", new AnnonceController, "details");
 
 
