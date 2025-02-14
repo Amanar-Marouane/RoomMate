@@ -27,7 +27,7 @@
                     <h4>find your roommate</h4>
                 </div>
                 <p id="signin_p">____ Please fill these informations ____</p>
-                <form action="/register" method="post">
+                <form action="/register" method="post" enctype="multipart/form-data">
                 
                 <?php if (!empty($data['exists_err'])): ?>
                     <p class="error_msg"><?php echo $data['exists_err']; ?></p>

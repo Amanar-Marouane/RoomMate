@@ -8,51 +8,69 @@ use Ratchet\ConnectionInterface;
 class MyChat implements MessageComponentInterface
 {
     protected $clients;
+    protected $rooms;
 
     public function __construct()
     {
         $this->clients = new \SplObjectStorage;
+        $this->rooms = [];
     }
 
     public function onOpen(ConnectionInterface $conn)
     {
-        // Store the new connection to send messages to later
         $this->clients->attach($conn);
-
         echo "New connection! ({$conn->resourceId})\n";
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $numRecv = count($this->clients) - 1;
-        echo sprintf(
-            'Connection %d sending message "%s" to %d other connection%s' . "\n",
-            $from->resourceId,
-            $msg,
-            $numRecv,
-            $numRecv == 1 ? '' : 's'
-        );
+        $data = json_decode($msg, true);
+        // echo "Received data: " . print_r($data, true) . "\n";
 
-        foreach ($this->clients as $client) {
-            if ($from !== $client) {
-                // The sender is not the receiver, send to each client connected
-                $client->send($msg);
+        if ($data["type"] === "join") {
+            $roomId = $data["room"];
+            if (!isset($this->rooms[$roomId])) {
+                $this->rooms[$roomId] = new \SplObjectStorage;
+            }
+            $this->rooms[$roomId]->attach($from);
+            // echo "User {$from->resourceId} joined room {$roomId}\n";
+        } elseif ($data["type"] === "message") {
+            $roomId = $data["room"];
+            if (isset($this->rooms[$roomId])) {
+                $messageToSend = [
+                    "type" => "message",
+                    "content" => $data["message"] ?? $data["content"],
+                    "user_id" => $data["user_id"],
+                    "to_user_id" => $data["to_user_id"],
+                    "room" => $roomId
+                ];
+
+                // echo "Sending message: " . print_r($messageToSend, true) . "\n";
+
+                foreach ($this->rooms[$roomId] as $client) {
+                    if ($client !== $from) {
+                        $client->send(json_encode($messageToSend));
+                    }
+                }
             }
         }
     }
 
     public function onClose(ConnectionInterface $conn)
     {
-        // The connection is closed, remove it, as we can no longer send it messages
-        $this->clients->detach($conn);
+        foreach ($this->rooms as $roomId => $clients) {
+            if ($clients->contains($conn)) {
+                $clients->detach($conn);
+                echo "User {$conn->resourceId} left room {$roomId}\n";
+            }
+        }
 
-        echo "Connection {$conn->resourceId} has disconnected\n";
+        $this->clients->detach($conn);
     }
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo "An error has occurred: {$e->getMessage()}\n";
-
+        echo "Error: {$e->getMessage()}\n";
         $conn->close();
     }
 }
