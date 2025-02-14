@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use app\models\Offer;
-use app\models\Demand;
+use app\models\{Offer, Demand};
+use Exception;
 
 class AnnonceController
 {
@@ -180,16 +180,49 @@ class AnnonceController
     {
         $json = file_get_contents("php://input");
         $data = json_decode($json, true);
-        $search = $data["search"];
+
+        $title = $data["title"];
         $budget = $data["budget"];
         $city = $data["city"];
-        $available_at = $data['available_at'];
-        echo $this->demand->searchAnnounce($search, $budget, $city, $available_at);
+        $available_at = $data["available_at"];
+        $type = $data["type"];
+
+        header('Content-Type: application/json');
+
+        $results = $this->demand->searchAnnounce($title, $budget, $city, $available_at, $type);
+
+        $cleanResults = [];
+        foreach ($results as $row) {
+            $cleanResults[] = [
+                'announce_id' => $row['announce_id'],
+                'user_id' => $row['user_id'],
+                'full_name' => $row['full_name'],
+                'title' => $row["title"],
+                'photo' => $row['photo'],
+                'origin_city' => $row['origin_city'],
+                'localisation' => $row['localisation'],
+                'budget' => $row['budget'],
+                'available_at' => $row['available_at'],
+                'announce_type' => $row['announce_type']
+            ];
+        }
+
+        $json = json_encode([
+            'data' => $cleanResults,
+            'count' => count($cleanResults)
+        ], JSON_PARTIAL_OUTPUT_ON_ERROR | JSON_INVALID_UTF8_SUBSTITUTE);
+
+        if ($json === false) {
+            throw new Exception(json_last_error_msg());
+        }
+
+        echo $json;
     }
-    
+
+
     public function showVannonce()
     {
-        $announces = $this->offer->all_announce();
+        $announces = $this->offer->all_announce($_SESSION['user_id']);
         extract($announces);
 
 

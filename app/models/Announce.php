@@ -29,10 +29,10 @@ abstract class Announce
     }
     abstract  public function create_annonce($studentid);
 
-    public function all_announce($userid = 2)
+    public function all_announce($userid)
     {
 
-        $query = " SELECT a.announce_id, a.address, a.localisation, a.description, 
+        $query = " SELECT a.announce_id, a.title, a.address, a.localisation, a.description, 
                     a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
                     a.criteres_colocataire, a.capacite_accueil, a.equipements, 
                     a.zones_souhaitees, a.demand_type, a.move_in_date,
