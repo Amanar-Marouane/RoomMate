@@ -21,7 +21,7 @@
                             <td class="p-4">
                                 <div class="flex justify-start items-center gap-0.5">
                                     <div class="bg-red-500 h-10 w-10 border-0 rounded-full">
-                                        <img src="<?= $user['photo'] ?>" alt="-" class="">
+                                        <img src="/<?= $user['photo'] ?>" alt="-" class=" h-10 w-10 border-0 rounded-full">
                                     </div>
                                     <div>
                                         <p class="text-sm text-blue-600 font-bold"><?= $user['full_name'] ?></p>

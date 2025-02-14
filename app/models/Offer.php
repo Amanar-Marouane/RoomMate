@@ -75,21 +75,21 @@ class Offer extends Announce
             $this->equipement = $equipement,
             $this->capacite_accueil = $capacite_accueil,
             $this->announce_type = $type,
-            $this->galorie = $galorie
+            $this->galorie[] = $galorie
 
 
         ];
     }
 
-   
+
 
     public function create_annonce($studentid)
     {
         try {
-          
+
             $this->pdo->transaction();
 
-          
+
             $query = "INSERT INTO announce (user_id,localisation,address,description,
                     available_at,announce_type,budget,regles_cohabitation,criteres_colocataire,
                     capacite_accueil,equipements) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
@@ -106,7 +106,7 @@ class Offer extends Announce
                 $this->capacite_accueil,
                 $this->equipement
                 // $this->galorie
-                
+
             ];
 
             $db = $this->pdo;
@@ -114,9 +114,9 @@ class Offer extends Announce
 
             $idOffer = $db->lastInsertId();
 
-            $querypicture = "INSERT INTO announce_media(announce_id, media) VALUES (?,?)";
+            $querypicture = "INSERT INTO announce_media(announce_id,media) VALUES (?,?)";
 
-            foreach($this->galorie as $picture){
+            foreach ($this->galorie as $picture) {
 
                 $parametres = [$idOffer, $picture['stored_name']];
                 $db->query($querypicture, $parametres);
@@ -129,5 +129,4 @@ class Offer extends Announce
             return "Erreur: " . $e->getMessage();
         }
     }
-  
 }

@@ -21,8 +21,6 @@ class AnnonceController
         include __DIR__ . "/../views/Annonce.php";
     }
 
-
-
     // public function insertted(array $photos)
     // {
     //     $upload_directory = "assets/";
@@ -50,6 +48,8 @@ class AnnonceController
 
     //     return $uploaded_photos;
     // }
+
+
     public function insertted(array $photos)
     {
         $upload_directory = "assets/";
@@ -71,7 +71,7 @@ class AnnonceController
             if (!empty($tmpName)) {
                 $file_basename = pathinfo($photos["name"][$index], PATHINFO_FILENAME);
                 $file_extension = pathinfo($photos["name"][$index], PATHINFO_EXTENSION);
-                $new_image_name = $file_basename . '_' . date("Ymd_His") . '.' . $file_extension;
+                $new_image_name = $file_basename . '' . date("Ymd_His") . '.' . $file_extension;
                 $target_file = $upload_directory . $new_image_name;
 
                 if (move_uploaded_file($tmpName, $target_file)) {
@@ -92,12 +92,13 @@ class AnnonceController
 
 
 
+
     public function ajoute_annonce()
     {
 
         if (isset($_POST['ajouter'])) {
 
-            $_SESSION['user_id'] = 13;
+
 
             $titre = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
@@ -120,13 +121,13 @@ class AnnonceController
 
             $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
             $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
-            
-            
+
+
             if (!empty($type)) {
                 if ($type === "Offre") {
                     echo "Ceci est une offre.";
                     $galarie = isset($_FILES['images']) ? $_FILES['images'] : null;
-        
+
                     $galories = $this->insertted($galarie);
                     $result = $this->offer->setAttribut(
                         $type,
@@ -144,7 +145,8 @@ class AnnonceController
 
 
                     print_r($galories);
-                    $studentid=$_SESSION['user_id'];
+                    $studentid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
+
 
                     $annonce = $this->offer->create_annonce($studentid);
                 } else {
@@ -162,7 +164,8 @@ class AnnonceController
                         $demand_type,
                         $move_in_date
                     );
-                    $studentid=$_SESSION['user_id'];
+                    $studentid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
+
                     $annonce = $this->demand->create_annonce($studentid);
                 }
             } else {

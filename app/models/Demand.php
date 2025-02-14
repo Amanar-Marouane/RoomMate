@@ -8,8 +8,8 @@ class Demand extends Announce
 {
   private  $zones_souhaitees;
   private $demand_type;
-
   private $move_in_date;
+  
   public function __construct(
     $type = "",
     $localisation = "",

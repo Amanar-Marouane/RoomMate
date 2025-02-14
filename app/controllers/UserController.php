@@ -6,22 +6,27 @@ namespace app\controllers;
 
 use app\models\User;
 use App\Models\MailerModel;
+use App\Models\Offer;
 
 
 class UserController
 {
     private $user;
     private $mailModel;
+    private $annonce;
     public function __construct()
     {
         $this->user = new User;
         $this->mailModel = new MailerModel;
+        $this->annonce = new Offer;
     }
 
     public function showProfile()
     {
         $user_id = $_SESSION["user_id"] ?? 1;
         $info = $this->user->userInfo($user_id);
+        $offers = $this->annonce->ShowMyAnnounce($user_id, "Offre");
+        $demands = $this->annonce->ShowMyAnnounce($user_id, "Demande");
         extract($info);
         include __DIR__ . "/../views/profile.view.php";
     }
@@ -64,6 +69,8 @@ class UserController
                 //verify the password
                 if (password_verify($data['password'], $user['password'])) {
                     //check user status
+
+                    // var_dump($user);
                     if ($user['status'] === 'desactive') {
                         $data['login_err'] = 'Inactive user. Please verify your email';
                     } else {
@@ -169,7 +176,6 @@ class UserController
                         $data['photo_err'] = $uploadResult['error'];
                     }
                 }
-
                 //register user
                 if ($this->user->registerUser($data['username'], $data['email'], $data['password'], $data['year_of_study'], $data['origin_city'], $data['current_city'], $data['bio'], $data['reference'], $data['preferences'], $picture)) {
                     $this->sendCodeToEmail($data['username'], $data['email']);
