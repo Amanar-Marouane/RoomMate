@@ -2,14 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\User;
+use app\models\{User,Demand};
 
 class AdminController
 {
     private $admin;
+    private $annonce;
     public function __construct()
     {
         $this->admin = new User;
+        $this->annonce = new Demand("","","","","","","","","");
     }
 
     // Gestion de users ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -55,8 +57,8 @@ class AdminController
     // **************************************************************************************************************************************
     public function showViewAnnounces()
     {
-        // $info = $this->admin->showAllAnnounces();
-        // extract($info);
+        $info = $this->annonce->showAllAnnounces();
+        extract($info);
         include __DIR__ . "/../views/admin/announces.view.php";
     }
 }

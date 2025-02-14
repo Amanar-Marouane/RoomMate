@@ -9,10 +9,11 @@
 </head>
 
 <body>
+
     <div class="container">
 
 
-        <main>
+        <main style="margin-top:50px">
             <h2>Ajouter une nouvelle annonce</h2>
             <p class="subtitle">
                 vous êtes à quelques pas de trouver un nouveau logement 😊

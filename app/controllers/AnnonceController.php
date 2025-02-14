@@ -20,6 +20,10 @@ class AnnonceController
     {
         include __DIR__ . "/../views/Annonce.php";
     }
+    public function show_all_Annonce()
+    {
+        include __DIR__ . "/../views/liste.php";
+    }
 
 
 
@@ -97,6 +101,8 @@ class AnnonceController
 
         if (isset($_POST['ajouter'])) {
 
+            $_SESSION['user_id'] = 13;
+
             $titre = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
             $description = isset($_POST['description']) ? $_POST['description'] : "";
@@ -141,7 +147,6 @@ class AnnonceController
                     );
 
 
-                    var_dump($galories);
                     $studentid = $_SESSION['user_id'];
 
                     $annonce = $this->offer->create_annonce($studentid);
@@ -180,5 +185,20 @@ class AnnonceController
         $city = $data["city"];
         $available_at = $data['available_at'];
         echo $this->demand->searchAnnounce($search, $budget, $city, $available_at);
+    }
+    
+    public function showVannonce()
+    {
+        $announces = $this->offer->all_announce();
+        extract($announces);
+
+
+        include __DIR__ . "/../views/liste.php";
+    }
+
+    public function details()
+    {
+        $id = $_GET['id'];
+        include __DIR__ . "/../views/Annonce.php";
     }
 }
