@@ -31,8 +31,18 @@ class UserController
         include __DIR__ . "/../views/profile.view.php";
     }
 
+    public function showHomePage(){
+        include __DIR__ . '/../views/homePage.php';
+    }
+
+    // show register page 
+    public function showRegister($data = [])
+    {
+        include __DIR__ . '/../views/register.php';
+    }
+
     // show login page 
-    public function showLogin()
+    public function showLogin($data = [])
     {
         include __DIR__ . '/../views/login.php';
     }
@@ -64,15 +74,22 @@ class UserController
             //login user
             $user = $this->user->login($data['email']);
 
-            //check if user exists
+            //check if user exists or not
+            if(!$user){$data['login_err'] = 'User not found';
+            }
+
             if ($user) {
                 //verify the password
+                if (!password_verify($data['password'], $user['password'])){$data['password_err'] = 'Incorrect password';
+                }
+
                 if (password_verify($data['password'], $user['password'])) {
                     //check user status
 
                     // var_dump($user);
                     if ($user['status'] === 'desactive') {
                         $data['login_err'] = 'Inactive user. Please verify your email';
+                        $this->showLogin($data);
                     } else {
                         // set session variables and login the user
                         $_SESSION['user_id'] = $user['user_id'];
@@ -97,14 +114,9 @@ class UserController
         }
 
         //load view with errors
-        include __DIR__ . '/../views/login.php';
-    }
-
-    // show register page 
-    public function showRegister()
-    {
-        include __DIR__ . '/../views/register.php';
-    }
+        $this->showLogin($data);
+        exit();
+        }
 
     // register
     public function register()
@@ -125,7 +137,7 @@ class UserController
                 'bio' => trim($_POST['bio']),
                 'photo' => $_FILES["photo"] ?? null,
                 'reference' => trim($_POST['reference']),
-                'preferences' => isset($_POST['preferences']) ? json_encode($_POST['preferences'], true) : '', // Convert preferences array to JSON string
+                'preferences' => isset($_POST['preferences']) ? json_encode($_POST['preferences']) : json_encode([]),
                 'empty_err' => '',
                 'username_err' => '',
                 'email_err' => '',

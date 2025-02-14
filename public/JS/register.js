@@ -24,3 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+// choices.js
+const tagsSelect = new Choices("#preferences", {
+   removeItemButton: true, // allow removing selected preferences
+   placeholder: true,
+   placeholderValue: "Select preferences",
+   searchPlaceholderValue: "Search preferences..."
+});
