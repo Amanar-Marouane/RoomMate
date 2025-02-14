@@ -97,6 +97,8 @@ class AnnonceController
 
         if (isset($_POST['ajouter'])) {
 
+            $_SESSION['user_id'] = 13;
+
             $titre = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
             $description = isset($_POST['description']) ? $_POST['description'] : "";
@@ -141,7 +143,7 @@ class AnnonceController
                     );
 
 
-                    var_dump($galories);
+                    print_r($galories);
                     $studentid=$_SESSION['user_id'];
 
                     $annonce = $this->offer->create_annonce($studentid);

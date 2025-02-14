@@ -25,6 +25,12 @@ $router->route("get", "admin/users", new AdminController, "showViewUser");
 $router->route("post", "admin/users/updatestatus", new AdminController, "updateStatus");
 $router->route("post", "admin/users/deleteuser", new AdminController, "deleteUser");
 $router->route("get", "admin/announces", new AdminController, "showViewAnnounces");
+$router->route("get", "verifycompte", new UserController, "verifyCompteForm");
+$router->route("post", "verifycompte", new UserController, "verifyCode");
+$router->route("get", "forgotpassword", new UserController, "forgotPassword");
+$router->route("post", "forgotpassword", new UserController, "resetPassword");
+$router->route("get", "initialpsswd", new UserController, "initialPsswd");
+$router->route("post", "initialpsswd", new UserController, "restartPsswd");
 
 // route for showing login
 $router->route("get", "login", new UserController, "showLogin");
