@@ -50,6 +50,7 @@
 
                 <button type="submit" name="submit">Log in</button>
                 </form>
+                <p id=""><a id="" href="/forgotpassword">Forgot Password ?</a></p>
                 <p id="register_p">Not registered yet? <a id="register_a" href="/register">Create your account now</a></p>
             </div>
         </div>

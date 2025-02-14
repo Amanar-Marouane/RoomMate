@@ -40,42 +40,106 @@ class User
         return $this->pdo->query($stmt, [$id_user]);
     }
     //login user
-    public function login($email){
-       $stmt = "SELECT * FROM users WHERE email = ?";
-       return $this->pdo->fetch($stmt, [$email]);
+    public function login($email)
+    {
+        $stmt = "SELECT * FROM users WHERE email = ?";
+        return $this->pdo->fetch($stmt, [$email]);
     }
 
     //check if user exists
-    public function userExists($username, $email){
-      $stmt = "SELECT * FROM users WHERE username = ? OR email = ?";
-      return $this->pdo->fetch($stmt, [$username, $email]);
-       
+    public function userExists($username, $email)
+    {
+        $stmt = "SELECT * FROM users WHERE full_name = ? OR email = ?";
+        return $this->pdo->fetch($stmt, [$username, $email]);
     }
 
-    //register new user
-    // public function registerUser($username, $email, $password, $role){
-    //    if($data['role'] == "tutor"){
-    //        $stmt = $this->pdo->query("INSERT INTO users (username, email, password, role, status) VALUES (:username, :email, :password, :role, 'active')");
-    //        $query->bindParam(":username", $data['username']);
-    //        $query->bindParam(":email", $data['email']);
-    //        $query->bindParam(":password", $data['password']);
-    //        $query->bindParam(":role", $data['role']);
-    //        $this->pdo->fetch($stmt, [$username, $email]);
+    //register user
+    public function registerUser($username, $email, $password, $year_of_study, $origin_city, $current_city, $bio, $reference, $preferences, $picture)
+    { {
+            $stmt = "INSERT INTO users (full_name, email, password, year_of_study, origin_city, current_city, bio, reference, preferences, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            return $this->pdo->query($stmt, [
+                $username,
+                $email,
+                $password,
+                $year_of_study,
+                $origin_city,
+                $current_city,
+                $bio,
+                $reference,
+                $preferences,
+                $picture
+            ]);
+        }
+    }
 
-    //        if( $query->execute()){
-    //             return true;
-    //        }else{
-    //             return false;
-    //        }
-    //    }else{
-    //        $stmt = "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
-    //        return $this->pdo->fetch($stmt, [$username, $email, $password, $role]);
 
-    //        if( $query->execute()){
-    //             return true;
-    //        }else{
-    //             return false;
-    //        }
-    //    }
-    // }
+    public function addCode($email, $code, $expiry)
+    {
+
+        $stmt = "INSERT INTO verifyCode (email, code, expires_at) VALUES (?, ?, ?)";
+        return $this->pdo->query($stmt, [
+            $email,
+            $code,
+            $expiry
+        ]);
+    }
+
+    public function verifyCode($email, $codeVerify)
+    {
+        $stmt = "SELECT * FROM verifyCode WHERE email = ? AND code = ? AND expires_at > NOW()";
+        return $this->pdo->fetch($stmt, [$email, $codeVerify]);
+    }
+
+    public function updateStatusByEmail($status, $email)
+    {
+        $stmt = "UPDATE users SET status = ? WHERE email = ?";
+        return $this->pdo->query($stmt, [htmlspecialchars($status), $email]);
+    }
+
+    public function deleteCodeByEmail($email)
+    {
+        $stmt = "DELETE FROM verifyCode WHERE email = ?";
+        return $this->pdo->query($stmt, [$email]);
+    }
+
+
+
+    // reset password function 
+
+    // **********************************************************************************************************************************************************************
+    public function getIdByemail($email)
+    {
+
+        $stmt = "SELECT user_id FROM users WHERE email = ?";
+        return $this->pdo->query($stmt, [$email]);
+    }
+
+
+    // **********************************************************************************************************************************************************************
+    public function getEmailByToken($token)
+    {
+        $stmt = "SELECT email FROM resetPassword WHERE token = ? AND expires_at > NOW()";
+        return $this->pdo->fetch($stmt, [$token]);
+    }
+
+    public function addToken($email, $token, $expiry)
+    {
+        $stmt = "INSERT INTO resetPassword(email, token, expires_at) VALUES (?,?,?)";
+        return $this->pdo->query($stmt, [$email, $token, $expiry]);
+    }
+    
+    // **********************************************************************************************************************************************************************
+    public function restartPassword($userData)
+    {
+        $stmt = "UPDATE users SET password = ? WHERE email=? ";
+        return $this->pdo->query($stmt, [$userData[1], $userData[0]]);
+        
+    }
+    // **********************************************************************************************************************************************************************
+    public function deleteToken($email)
+    {
+            $stmt = "DELETE FROM resetPassword WHERE email = ? ";
+            return $this->pdo->query($stmt, [$email]);
+            
+    }
 }

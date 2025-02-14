@@ -36,4 +36,17 @@ class Message
         $stmt = "SELECT user_id, photo, full_name FROM users WHERE user_id = ?";
         return $this->pdo->fetch($stmt, [$user_id]);
     }
+
+    public function conversations_history($user_src_id)
+    {
+        $stmt = 'SELECT messages.*, users.photo, users.full_name AS user_dest_name
+                FROM messages
+                JOIN users ON users.user_id = messages.user_dest_id
+                WHERE messages.user_dest_id != ? AND messages.user_src_id = ?
+                GROUP BY messages.user_dest_id
+                ORDER BY date_message
+                ';
+
+        return $this->pdo->fetchAll($stmt, [$user_src_id, $user_src_id]);
+    }
 }
