@@ -12,6 +12,7 @@ class Demand extends Announce
   protected $pdo;
 
   private $move_in_date;
+  
   public function __construct(
     $type = "",
     $localisation = "",

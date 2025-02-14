@@ -79,20 +79,16 @@ class Offer extends Announce
             $this->announce_type = $type,
             $this->galorie = $galorie,
             $this->title=$title
-
-
         ];
     }
 
-   
+
 
     public function create_annonce($studentid)
     {
         try {
-          
-            $this->pdo->transaction();
 
-          
+            $this->pdo->transaction();
             $query = "INSERT INTO announce (user_id,localisation,address,description,
                     available_at,announce_type,budget,regles_cohabitation,criteres_colocataire,
                     capacite_accueil,equipements,title) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -110,7 +106,7 @@ class Offer extends Announce
                 $this->equipement,
                 $this->title
                 // $this->galorie
-                
+
             ];
 
             $db = $this->pdo;
@@ -120,7 +116,7 @@ class Offer extends Announce
 
             $querypicture = "INSERT INTO announce_media(announce_id,media) VALUES (?,?)";
 
-            foreach($this->galorie as $picture){
+            foreach ($this->galorie as $picture) {
 
                 $parametres = [$idOffer, $picture['stored_name']];
                 $db->query($querypicture, $parametres);
@@ -145,10 +141,8 @@ class Offer extends Announce
         $params=[$announce_id];
         $db = $this->pdo;
         return $db->fetchAll($query, $params );
-    
-    
-    
       }
+
       public function getGalerie($announce_id){
           $query="SELECT m.media,m.media_id, a.announce_id FROM announce_media m LEFT JOIN announce a 
          ON m.announce_id=a.announce_id WHERE m.announce_id=?";
@@ -157,8 +151,5 @@ class Offer extends Announce
          $test = $db->fetchAll($query, $params );
        
          return $test;
-    
-        
       }
-  
 }

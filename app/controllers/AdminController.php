@@ -22,7 +22,7 @@ class AdminController
         extract($info);
         include __DIR__ . "/../views/admin/users.view.php";
     }
-
+    
     // **************************************************************************************************************************************
     public function updateStatus()
     {
@@ -37,7 +37,7 @@ class AdminController
             }
         }
     }
-
+    
     // **************************************************************************************************************************************
     public function deleteUser()
     {
@@ -51,8 +51,8 @@ class AdminController
             }
         }
     }
-
-
+    
+    
     // Gestion de annonces : ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // **************************************************************************************************************************************
     public function showViewAnnounces()
@@ -60,5 +60,35 @@ class AdminController
         $info = $this->annonce->showAllAnnounces();
         extract($info);
         include __DIR__ . "/../views/admin/announces.view.php";
+    }
+    
+    
+    public function validation()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['btn_validate'])) {
+                $validate = htmlspecialchars($_POST['validate']);
+                $id_announce = $_POST['id_announce'];
+                $info = $this->annonce->validationAnnounce($validate, $id_announce);
+                if ($info) {
+                    header("location: /admin/announces");
+                }
+            }
+        }
+    }
+    public function deleteAnnounce()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['btn_delete_announce'])) {
+                $id_announce = $_POST['id_announce'];
+                $info = $this->annonce->deleteAnnounce($id_announce);
+                if ($info && $_SESSION['role'] === "admin") {
+                    header("location: /admin/announces");
+                }
+                elseif ($info && $_SESSION['id_loget_role'] === "student") {
+                    header("location: /profile");
+                }
+            }
+        }
     }
 }
