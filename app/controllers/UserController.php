@@ -77,8 +77,7 @@ class UserController
                             // $this->show();
                             exit;
                         } elseif ($user['role'] === 'student') {
-                            // $this->showHomepage();
-                            echo "welcome";
+                            header("Location: /profile");
                             exit;
                         }
                     }
@@ -217,7 +216,6 @@ class UserController
             return ["error" => "Erreur lors de l'upload de l'image."];
         }
     }
-
 
 
 
