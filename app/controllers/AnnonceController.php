@@ -20,6 +20,10 @@ class AnnonceController
     {
         include __DIR__ . "/../views/Annonce.php";
     }
+    public function show_all_Annonce()
+    {
+        include __DIR__ . "/../views/liste.php";
+    }
 
 
 
@@ -97,6 +101,8 @@ class AnnonceController
 
         if (isset($_POST['ajouter'])) {
 
+            $_SESSION['user_id'] = 13;
+
             $titre = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
             $description = isset($_POST['description']) ? $_POST['description'] : "";
@@ -118,13 +124,13 @@ class AnnonceController
 
             $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
             $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
-            
-            
+
+
             if (!empty($type)) {
                 if ($type === "Offre") {
                     echo "Ceci est une offre.";
                     $galarie = isset($_FILES['images']) ? $_FILES['images'] : null;
-        
+
                     $galories = $this->insertted($galarie);
                     $result = $this->offer->setAttribut(
                         $type,
@@ -141,8 +147,7 @@ class AnnonceController
                     );
 
 
-                    var_dump($galories);
-                    $studentid=$_SESSION['user_id'];
+                    $studentid = $_SESSION['user_id'];
 
                     $annonce = $this->offer->create_annonce($studentid);
                 } else {
@@ -160,7 +165,7 @@ class AnnonceController
                         $demand_type,
                         $move_in_date
                     );
-                    $studentid=$_SESSION['user_id'];
+                    $studentid = $_SESSION['user_id'];
                     $annonce = $this->demand->create_annonce($studentid);
                 }
             } else {
@@ -169,5 +174,31 @@ class AnnonceController
         } else {
             echo "nothing";
         }
+    }
+
+    public function searchAnnounce()
+    {
+        $json = file_get_contents("php://input");
+        $data = json_decode($json, true);
+        $search = $data["search"];
+        $budget = $data["budget"];
+        $city = $data["city"];
+        $available_at = $data['available_at'];
+        echo $this->demand->searchAnnounce($search, $budget, $city, $available_at);
+    }
+    
+    public function showVannonce()
+    {
+        $announces = $this->offer->all_announce();
+        extract($announces);
+
+
+        include __DIR__ . "/../views/liste.php";
+    }
+
+    public function details()
+    {
+        $id = $_GET['id'];
+        include __DIR__ . "/../views/Annonce.php";
     }
 }

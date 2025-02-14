@@ -86,4 +86,33 @@ class Demand extends Announce
 
     return "Annonce créée avec succès !";
   }
+
+  public function searchAnnounce(string $search, array $budget, string $city, string $available_at)
+  {
+    $min_budget = $budget[0] ?? null;
+    $max_budget = $budget[1] ?? null;
+
+    $stmt = "SELECT * FROM announces WHERE title LIKE ? ";
+    $params = ["%$search%"];
+
+    if (!empty($min_budget)) {
+      $stmt .= "AND budget LIKE ? ";
+      $params[] = "$min_budget%";
+    }
+    if (!empty($max_budget)) {
+      $stmt .= "AND budget <= ? ";
+      $params[] = $max_budget;
+    }
+
+    if (!empty($city)) {
+      $stmt .= "AND city LIKE ? ";
+      $params[] = "%$city%";
+    }
+    if (!empty($available_at)) {
+      $stmt .= "AND available_at LIKE ? ";
+      $params[] = "%$available_at%";
+    }
+
+    return $this->pdo->fetchAll($stmt, $params);
+  }
 }

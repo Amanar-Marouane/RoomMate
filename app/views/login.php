@@ -24,7 +24,7 @@
                     <h3>Login to your account</h3>
                     <h4>find your roommate</h4>
                 </div>
-                <p id="signin_p"">____ sign in with email ____</p>
+                <p id="signin_p">____ sign in with email ____</p>
                 <form action="/login" method="post">
                     <label for="email">Email</label>
                 <div class="input-container">
@@ -50,6 +50,7 @@
 
                 <button type="submit" name="submit">Log in</button>
                 </form>
+                <p id=""><a id="" href="/forgotpassword">Forgot Password ?</a></p>
                 <p id="register_p">Not registered yet? <a id="register_a" href="/register">Create your account now</a></p>
             </div>
         </div>
