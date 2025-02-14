@@ -17,6 +17,11 @@ $router = new Router;
 // route for showing refister
 $router->route("get", "register", new UserController, "showRegister");
 
+
+$router->route("get", "home", new UserController, "showHomePage");
+
+
+
 // route for processing register
 $router->route("post", "register", new UserController, "register");
 $router->route("get", "profile", new UserController, "showProfile");
