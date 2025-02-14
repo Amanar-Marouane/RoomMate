@@ -28,7 +28,7 @@ class UserController
     // show register page 
     public function showRegister()
     {
-          include __DIR__ . '/../views/register.php';
+        include __DIR__ . '/../views/register.php';
     }
 
     // show login page 
@@ -96,12 +96,6 @@ class UserController
 
         //load view with errors
         include __DIR__ . '/../views/login.php';
-    }
-
-    // show register page 
-    public function showRegister()
-    {
-        include __DIR__ . '/../views/register.php';
     }
 
     // register
