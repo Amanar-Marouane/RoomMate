@@ -14,7 +14,11 @@ $router = new Router;
 //nroutiw hna s'il vous plus :>
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //=>
+// route for showing refister
+$router->route("get", "register", new UserController, "showRegister");
 
+// route for processing register
+$router->route("post", "register", new UserController, "register");
 $router->route("get", "profile", new UserController, "showProfile");
 $router->route("get", "message/{user_id}", new MessageController, "message");
 $router->route("post", "message/{user_id}", new MessageController, "send");
@@ -41,6 +45,9 @@ $router->route("get", "annonce", new AnnonceController, "showAnnonce");
 
 // $router->route("post", "annonce", new AnnonceController, "insertted");
 $router->route("post", "annonce", new AnnonceController, "ajoute_annonce");
+$router->route("get", "liste", new AnnonceController, "showVannonce");
+$router->route("get", "liste", new AnnonceController, "details");
+
 
 // route for showing refister
 $router->route("get", "register", new UserController, "showRegister");

@@ -25,6 +25,11 @@ class UserController
         extract($info);
         include __DIR__ . "/../views/profile.view.php";
     }
+    // show register page 
+    public function showRegister()
+    {
+          include __DIR__ . '/../views/register.php';
+    }
 
     // show login page 
     public function showLogin()

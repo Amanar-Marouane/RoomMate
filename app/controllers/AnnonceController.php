@@ -20,6 +20,10 @@ class AnnonceController
     {
         include __DIR__ . "/../views/Annonce.php";
     }
+    public function show_all_Annonce()
+    {
+        include __DIR__ . "/../views/liste.php";
+    }
 
 
 
@@ -171,5 +175,18 @@ class AnnonceController
         } else {
             echo "nothing";
         }
+    }
+    public function showVannonce()
+    {
+        $announces = $this->offer->all_announce();
+        extract($announces);
+        
+       
+        include __DIR__ . "/../views/liste.php";
+    }
+
+    public function details(){
+        $id=$_GET['id'];
+        include __DIR__ . "/../views/Annonce.php";
     }
 }

@@ -24,7 +24,7 @@
                     <h3>Login to your account</h3>
                     <h4>find your roommate</h4>
                 </div>
-                <p id="signin_p"">____ sign in with email ____</p>
+                <p id="signin_p">____ sign in with email ____</p>
                 <form action="/login" method="post">
                     <label for="email">Email</label>
                 <div class="input-container">
