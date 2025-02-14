@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Roomate</title>
   <link rel="stylesheet" href="CSS/singleOffer.css">
+  <style></style>
+  <style></style>
 
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -20,47 +22,56 @@
   <!-- Main Content -->
   <main>
     <section class="property">
-      <!-- Image Group -->
-      <div class="property-images">
-        <div class="main-image">
-          <img src="assets/offer3.png" alt="Main Room" />
-        </div>
-        <div class="side-images">
-          <img src="assets/offer1.png" alt="Office" />
-          <img src="assets/offer2.png" alt="Living Room" />
-        </div>
-      </div>
-      
+     
+
+    <div class="property-images">
+  <?php foreach($galaries as $photo): ?>
+    <div class="main-image">
+      <img src="/assets/<?= htmlspecialchars($photo['media']) ?>" alt="Image de l'offre" />
+    </div>
+  <?php endforeach; ?>
+</div>
 
       <!-- Description & User Card -->
       <div class="property-info">
+        <?php foreach( $offres as $offre):?>
         <div class="property-details">
-          <p class="date">12 November 2021</p>
-          <h2>Entire residential home appartement</h2>
+          <p class="date"><?php echo date("d F Y", strtotime($demande['created_at'] ?? 'now')); ?></p>
+          <h2><?php echo $offre['title']?> </h2>
           <p class="rooms">
-            <strong>3 rooms</strong> &nbsp; <i class="fas fa-bed"></i> 3
+            <!-- <strong>3 rooms</strong> &nbsp; <i class="fas fa-bed"></i> 3 -->
           </p>
           <p class="description">
-            Situé dans un quartier populaire de la médina, le riad Dar Mata vous fera vivre une vraie
-            expérience dans la vie des marrakchis...
+           <?php  echo $offre['description']?>
           </p>
+          <p class="description"> <strong>criteres_colocataire:</strong>
+           <?php  echo $offre['criteres_colocataire']?>
+          </p>
+          <p class="description"> <strong>regles_cohabitation:</strong>
+           <?php  echo $offre['regles_cohabitation']?>
+          </p>
+          
         </div>
         <div class="contact-card">
-          <img src="assets/user-profile.png" alt="Hakim Jellaba" class="profile-img" />
-          <h3>Hakim Jellaba</h3>
-          <p class="age">FES - 23</p>
+          <img src="/<?= $announce['photo'] ?>" alt="Hakim Jellaba" class="profile-img" />
+          <h3><?php echo $offre['full_name'] ?></</h3>
+          <p class="age"><?php echo $offre['origin_city'] ?></p>
           <ul>
-            <li><i class="fas fa-wallet"></i> Budget: <strong>800 DH</strong></li>
-            <li><i class="fas fa-city"></i> City: <strong>Safi</strong></li>
-            <li><i class="fas fa-map-marker-alt"></i> Address: <strong>Al Amal</strong></li>
-            <li><i class="fas fa-calendar-alt"></i> Availability: <strong>Immediately</strong></li>
-            <li><i class="fas fa-door-open"></i> Room Type: <strong>Shared</strong></li>
+            <li><i class="fas fa-wallet"></i> Budget: <strong><?php  echo $offre['budget']?> DH</strong></li>
+            <li><i class="fas fa-city"></i> City: <strong><?php echo $offre['localisation']?></strong></li>
+            <li><i class="fas fa-map-marker-alt"></i> Address: <strong> <?php echo $offre['address']?></strong></li>
+            <li><i class="fas fa-calendar-alt"></i> Availability: <strong> <?php echo date("d F Y", strtotime($demande['available_at'] ?? 'now'));?></strong></li>
+            <li><i class="fas fa-door-open"></i> Room Type: <strong><?php echo $offre['demand_type']?></strong></li>
+            <li><i class="fas fa-door-open"></i> Capacité d'accueil: <strong><?php echo $offre['capacite_accueil']?></strong></li>
+            <li><i class="fas fa-door-open"></i> equipements: <strong><?php echo $offre['equipements']?></strong></li>
+
           </ul>
-          <button class="contact-btn">Contact Hakim</button>
+          <button class="contact-btn">Contact  <?php echo $offre['full_name'] ?></button>
           <p class="report"><i class="fas fa-flag"></i> Report this offer</p>
         </div>
       </div>
-    </section>
+      <?php endforeach 
+;?>    </section>
   </main>
 
   <!-- Footer -->

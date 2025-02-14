@@ -99,10 +99,7 @@ class UserController
     }
 
     // show register page 
-    public function showRegister()
-    {
-        include __DIR__ . '/../views/register.php';
-    }
+  
 
     // register
     public function register()

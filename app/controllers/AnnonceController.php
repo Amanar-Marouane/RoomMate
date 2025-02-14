@@ -101,9 +101,9 @@ class AnnonceController
 
         if (isset($_POST['ajouter'])) {
 
-            $_SESSION['user_id'] = 13;
+          
 
-            $titre = isset($_POST['titre']) ? $_POST['titre'] : "";
+            $title = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
             $description = isset($_POST['description']) ? $_POST['description'] : "";
             $localisation = isset($_POST['city']) ? $_POST['city'] : "";
@@ -124,13 +124,13 @@ class AnnonceController
 
             $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
             $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
-            
-            
+
+
             if (!empty($type)) {
                 if ($type === "Offre") {
                     echo "Ceci est une offre.";
                     $galarie = isset($_FILES['images']) ? $_FILES['images'] : null;
-        
+
                     $galories = $this->insertted($galarie);
                     $result = $this->offer->setAttribut(
                         $type,
@@ -143,12 +143,14 @@ class AnnonceController
                         $criteres_colocataires,
                         $equipement,
                         $capacite_accueil,
-                        $galories
+                        $galories,
+                        $title
                     );
 
 
                     print_r($galories);
-                    $studentid=$_SESSION['user_id'];
+                    $studentid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
+
 
                     $annonce = $this->offer->create_annonce($studentid);
                 } else {
@@ -164,9 +166,10 @@ class AnnonceController
                         $available_at,
                         $zones_souhaitees,
                         $demand_type,
-                        $move_in_date
+                        $move_in_date,$title
                     );
-                    $studentid=$_SESSION['user_id'];
+                    $studentid = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
+
                     $annonce = $this->demand->create_annonce($studentid);
                 }
             } else {
@@ -178,15 +181,68 @@ class AnnonceController
     }
     public function showVannonce()
     {
-        $announces = $this->offer->all_announce();
+        $userid= isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
+
+
+        $announces = $this->offer->all_announce($userid);
         extract($announces);
-        
-       
+
+
         include __DIR__ . "/../views/liste.php";
     }
 
-    public function details(){
-        $id=$_GET['id'];
-        include __DIR__ . "/../views/Annonce.php";
+    public function getOffer()
+    {
+        $announce_id = $_GET['offer_id'];
+
+
+        $offres = $this->offer->getoffer($announce_id);
+
+        if (!is_array($offres)) {
+            die("Erreur: La demande n'est pas un tableau associatif.");
+        }
+        extract($offres);
+
+        $galaries = $this->offer->getGalerie($announce_id);
+
+        if (!is_array($galaries)) {
+            die("Erreur: La demande n'est pas un tableau associatif.");
+        }
+
+          extract($galaries);
+
+
+
+
+
+
+        include __DIR__ . "/../views/offer.view.php";
     }
+    public function getdemande()
+    {
+        $announce_id = $_GET['demand_id'];
+        $demandes = $this->demand->getdemand($announce_id);
+
+        if (!is_array($demandes)) {
+            die("Erreur: La demande n'est pas un tableau associatif.");
+        }
+
+        extract($demandes);
+
+        include __DIR__ . "/../views/demande.view.php";
+    }
+    // public function getphotos(){
+    //     $announce_id = $_GET['offer_id'];
+    //     $galaries = $this->offer-> getGalerie($announce_id);
+
+    //     if (!is_array($galaries)) {
+    //         die("Erreur: La demande n'est pas un tableau associatif.");
+    //     }
+
+    //     extract($galaries);
+
+    //     include __DIR__ . "/../views/offer.view.php";
+    // }
+
+
 }

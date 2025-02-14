@@ -55,7 +55,7 @@
                                 <td class="p-4">
                                     <div class="flex justify-start items-center gap-0.5">
                                         <div class="bg-red-500 h-10 w-10 border-0 rounded-full">
-                                        <img src="<?php echo  $announce['photo'] ?>" alt="<?php echo  $announce['full_name'] ?>" class="">
+                                        <img src="/<?= $announce['photo'] ?>" alt="-" class=" h-10 w-10 border-0 rounded-full">
                                         </div>
                                         <div>
                                             <p class="text-sm text-black font-bold"><?php echo  $announce['full_name'] ?></p>
@@ -93,7 +93,7 @@
                                     <div>
                                         <p class="text-sm text-blue-500 opacity-50">more</p>
                                         <div class="text-sm text-blue-600 font-bold flex pt-1">
-                                        <a href="annonce?id=<?= $announce['announce_id']; ?>" class="text-sm text-[#DF5317] font-bold flex pt-1">
+                                        <a href="offer?offer_id=<?= $announce['announce_id']; ?>" class="text-sm text-[#DF5317] font-bold flex pt-1">
             <img src="/images/Group_6.png" alt="image">
         </a>
                                         </div>
@@ -108,7 +108,7 @@
                                 <td class="p-4">
                                     <div class="flex justify-start items-center gap-0.5">
                                         <div class="bg-red-500 h-10 w-10 border-0 rounded-full">
-                                            <img src="<?php echo  $announce['photo'] ?>" alt="<?php echo  $announce['full_name'] ?>" class="">
+                                        <img src="/<?= $announce['photo'] ?>" alt="-" class=" h-10 w-10 border-0 rounded-full">
                                         </div>
                                         <div>
                                             <p class="text-sm text-black font-bold"><?php echo  $announce['full_name'] ?></p>
@@ -145,7 +145,7 @@
                                 <td class="p-4">
     <div>
         <p class="text-sm text-[#DF5317] opacity-50">more</p>
-        <a href="annonce?id=<?= $announce['announce_id']; ?>" class="text-sm text-[#DF5317] font-bold flex pt-1">
+        <a href="demande?demand_id=<?= $announce['announce_id']; ?>" class="text-sm text-[#DF5317] font-bold flex pt-1">
             <img src="/images/Group_6.png" alt="image">
         </a>
     </div>

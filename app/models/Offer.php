@@ -25,7 +25,8 @@ class Offer extends Announce
         $criteres = "",
         $equipement = "",
         $capacites = "",
-        $galorie = []
+        $galorie = [],
+        $title=""
     ) {
 
         parent::__construct($type, $localisation, $address, $description, $budget, $available_at);
@@ -62,7 +63,8 @@ class Offer extends Announce
         $criteres_colocataires,
         $equipement,
         $capacite_accueil,
-        array $galorie
+        array $galorie,
+        $title
     ) {
         return [
             $this->localisation = $localisation,
@@ -75,7 +77,8 @@ class Offer extends Announce
             $this->equipement = $equipement,
             $this->capacite_accueil = $capacite_accueil,
             $this->announce_type = $type,
-            $this->galorie = $galorie
+            $this->galorie = $galorie,
+            $this->title=$title
 
 
         ];
@@ -92,7 +95,7 @@ class Offer extends Announce
           
             $query = "INSERT INTO announce (user_id,localisation,address,description,
                     available_at,announce_type,budget,regles_cohabitation,criteres_colocataire,
-                    capacite_accueil,equipements) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+                    capacite_accueil,equipements,title) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             $params = [
                 $studentid,
                 $this->localisation,
@@ -104,7 +107,8 @@ class Offer extends Announce
                 $this->regle_cohabitation,
                 $this->criteres_colocataires,
                 $this->capacite_accueil,
-                $this->equipement
+                $this->equipement,
+                $this->title
                 // $this->galorie
                 
             ];
@@ -114,7 +118,7 @@ class Offer extends Announce
 
             $idOffer = $db->lastInsertId();
 
-            $querypicture = "INSERT INTO announce_media(announce_id, media) VALUES (?,?)";
+            $querypicture = "INSERT INTO announce_media(announce_id,media) VALUES (?,?)";
 
             foreach($this->galorie as $picture){
 
@@ -129,5 +133,32 @@ class Offer extends Announce
             return "Erreur: " . $e->getMessage();
         }
     }
+    public function getoffer($announce_id){
+        $query="SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
+                        a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
+                        a.criteres_colocataire, a.capacite_accueil, a.equipements, 
+                        a.zones_souhaitees, a.demand_type, a.move_in_date,
+                        u.user_id, u.full_name , u.origin_city,u.photo
+                        FROM announce a 
+                        JOIN users u ON a.user_id = u.user_id WHERE a
+                        .announce_id = ? ";
+        $params=[$announce_id];
+        $db = $this->pdo;
+        return $db->fetchAll($query, $params );
+    
+    
+    
+      }
+      public function getGalerie($announce_id){
+          $query="SELECT m.media,m.media_id, a.announce_id FROM announce_media m LEFT JOIN announce a 
+         ON m.announce_id=a.announce_id WHERE m.announce_id=?";
+         $params=[$announce_id];
+         $db = $this->pdo;
+         $test = $db->fetchAll($query, $params );
+       
+         return $test;
+    
+        
+      }
   
 }

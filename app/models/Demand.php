@@ -40,7 +40,8 @@ class Demand extends Announce
       'zones_souhaitees' => $this->zones_souhaitees,
       'move_in_date' => $this->move_in_date,
       'demand_type' => $this->demand_type,
-      'type' => $this->announce_type
+      'type' => $this->announce_type,
+      
 
     ];
   }
@@ -55,7 +56,8 @@ class Demand extends Announce
       $this->zones_souhaitees = $zones_souhaitees,
       $this->move_in_date = $move_in_date,
       $this->demand_type = $demand_type,
-      $this->announce_type = $type
+      $this->announce_type = $type,
+      $this->title
 
 
     ];
@@ -66,8 +68,8 @@ class Demand extends Announce
 
 
     $query = "INSERT INTO announce (user_id, localisation, address, description, 
-                 available_at, announce_type, budget, zones_souhaitees, demand_type, move_in_date) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                 available_at, announce_type, budget, zones_souhaitees, demand_type, move_in_date,title) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
     $params = [
       $studentid,
@@ -79,11 +81,28 @@ class Demand extends Announce
       $this->budget,
       $this->zones_souhaitees,
       $this->demand_type,
-      $this->move_in_date
+      $this->move_in_date,
+      $this->title
     ];
     $db = $this->pdo;
     $db->query($query, $params);
 
     return "Annonce créée avec succès !";
+  }
+  public function getdemand($announce_id){
+    $query="SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
+                    a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
+                    a.criteres_colocataire, a.capacite_accueil, a.equipements, 
+                    a.zones_souhaitees, a.demand_type, a.move_in_date,
+                    u.user_id, u.full_name , u.origin_city,u.photo
+                    FROM announce a 
+                    JOIN users u ON a.user_id = u.user_id WHERE a
+                    .announce_id = ? ";
+    $params=[$announce_id];
+    $db = $this->pdo;
+     return $db->fetchAll($query, $params );
+
+
+
   }
 }
