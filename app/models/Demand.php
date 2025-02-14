@@ -3,11 +3,13 @@
 namespace app\models;
 
 use app\models\Announce;
+use core\Db;
 
 class Demand extends Announce
 {
   private  $zones_souhaitees;
   private $demand_type;
+  protected $pdo;
 
   private $move_in_date;
   public function __construct(
@@ -28,6 +30,7 @@ class Demand extends Announce
     $this->demand_type = $demand_type;
     $this->zones_souhaitees = $zones_souhaitees;
     $this->move_in_date = $move_in_date;
+    $this->pdo = Db::getInstance();
   }
   public function getAttribut()
   {
@@ -87,32 +90,44 @@ class Demand extends Announce
     return "Annonce créée avec succès !";
   }
 
-  public function searchAnnounce(string $search, array $budget, string $city, string $available_at)
+  public function searchAnnounce(string $search, array $budget, string $city, string $available_at, string $type)
   {
     $min_budget = $budget[0] ?? null;
     $max_budget = $budget[1] ?? null;
 
-    $stmt = "SELECT * FROM announces WHERE title LIKE ? ";
-    $params = ["%$search%"];
+    $stmt = "SELECT announce.*, users.full_name, users.photo, users.origin_city
+            FROM announce
+            JOIN users ON users.user_id = announce.user_id
+            WHERE title LIKE ? AND description LIKE ?";
+    $params = ["%$search%", "%$search%"];
 
     if (!empty($min_budget)) {
-      $stmt .= "AND budget LIKE ? ";
-      $params[] = "$min_budget%";
+      $stmt .= " AND budget >= ?";
+      $params[] = $min_budget;
     }
+
     if (!empty($max_budget)) {
-      $stmt .= "AND budget <= ? ";
+      $stmt .= " AND budget <= ?";
       $params[] = $max_budget;
     }
 
     if (!empty($city)) {
-      $stmt .= "AND city LIKE ? ";
+      $stmt .= " AND localisation LIKE ?";
       $params[] = "%$city%";
     }
+
     if (!empty($available_at)) {
-      $stmt .= "AND available_at LIKE ? ";
-      $params[] = "%$available_at%";
+      $stmt .= " AND available_at <= ?";
+      $params[] = $available_at;
     }
 
-    return $this->pdo->fetchAll($stmt, $params);
+    if (!empty($type)) {
+      $stmt .= " AND announce_type = ?";
+      $params[] = $type;
+    }
+
+    $results = $this->pdo->fetchAll($stmt, $params);
+
+    return $results ?: [];
   }
 }
