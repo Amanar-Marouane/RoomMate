@@ -31,7 +31,8 @@ class UserController
         include __DIR__ . "/../views/profile.view.php";
     }
 
-    public function showHomePage(){
+    public function showHomePage()
+    {
         include __DIR__ . '/../views/homePage.php';
     }
 
@@ -75,12 +76,14 @@ class UserController
             $user = $this->user->login($data['email']);
 
             //check if user exists or not
-            if(!$user){$data['login_err'] = 'User not found';
+            if (!$user) {
+                $data['login_err'] = 'User not found';
             }
 
             if ($user) {
                 //verify the password
-                if (!password_verify($data['password'], $user['password'])){$data['password_err'] = 'Incorrect password';
+                if (!password_verify($data['password'], $user['password'])) {
+                    $data['password_err'] = 'Incorrect password';
                 }
 
                 if (password_verify($data['password'], $user['password'])) {
@@ -96,14 +99,7 @@ class UserController
                         $_SESSION['username'] = $user['full_name'];
                         $_SESSION['role'] = $user['role'];
 
-                        //redirect based on role
-                        if ($user['role'] === 'admin') {
-                            // $this->show();
-                            exit;
-                        } elseif ($user['role'] === 'student') {
-                            header("Location: /profile");
-                            exit;
-                        }
+                        header("Location: /profile");
                     }
                 } else {
                     $data['login_err'] = 'Invalid password';
@@ -116,7 +112,7 @@ class UserController
         //load view with errors
         $this->showLogin($data);
         exit();
-        }
+    }
 
     // register
     public function register()
@@ -357,5 +353,12 @@ class UserController
                 }
             }
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        header("Location: /login");
+        exit;
     }
 }

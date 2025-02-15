@@ -28,7 +28,7 @@ class Router
         foreach ($this->routes[$method] as $route) {
             $pattern =  preg_replace("#\{\w+\}#", "([^\/]+)", $route["uri"]);
             if (preg_match("#^$pattern$#", $uri, $matches)) {
-                $allowed = $route['middleware'];
+                $allowed = $route["middleware"];
                 if (!is_null($allowed)) {
                     $middleware->middlewareHandler($allowed);
                 };
@@ -43,6 +43,14 @@ class Router
 
     public function only($key)
     {
-        $this->routes[array_key_last($this->routes)]["middleware"] = $key;
+        $method = strtolower(request_method());
+        if (!isset($this->routes[$method]) || empty($this->routes[$method])) {
+            return $this;
+        }
+        $lastIndex = array_key_last($this->routes[$method]);
+        if ($lastIndex !== null) {
+            $this->routes[$method][$lastIndex]["middleware"] = $key;
+        }
+        return $this;
     }
 }

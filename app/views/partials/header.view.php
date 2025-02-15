@@ -30,19 +30,52 @@ include __DIR__ . "/head.view.php";
                 <li class='mb-6 hidden max-lg:block'>
                     <a href="/home" class="text-indigo-500 font-bold text-2xl">Roomate</a>
                 </li>
+
                 <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
                     <button
                         class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
-                        Get started
+                        <a href="/home">Home</a>
                     </button>
                 </li>
-                <!-- <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+
+                <?php if (isset($_SESSION["user_id"]) && $_SESSION["role"] == "admin"): ?>
+                    <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
                         <button
                             class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
-                            Sign up
+                            <a href="/admin/users">Users Management</a>
                         </button>
-                    </li> -->
-
+                    </li>
+                    <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                        <button
+                            class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                            <a href="/admin/reports">Reports Management</a>
+                        </button>
+                    </li>
+                    <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                        <button
+                            class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                            <a href="/admin/announces">Announces Management</a>
+                        </button>
+                    </li>
+                <?php endif ?>
+                <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                    <button
+                        class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                        <a href="/liste">Announces</a>
+                    </button>
+                </li>
+                <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                    <button
+                        class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                        <a href="/profile">Profile</a>
+                    </button>
+                </li>
+                <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                    <button
+                        class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                        <a href="/logout">logout</a>
+                    </button>
+                </li>
             </ul>
         </div>
 
