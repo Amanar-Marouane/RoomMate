@@ -89,7 +89,7 @@ class Offer extends Announce
         try {
 
             $this->pdo->transaction();
-            $query = "INSERT INTO announce (user_id,localisation,address,description,
+            $query = "INSERT INTO announce(user_id,localisation,address,description,
                     available_at,announce_type,budget,regles_cohabitation,criteres_colocataire,
                     capacite_accueil,equipements,title) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             $params = [
@@ -105,8 +105,6 @@ class Offer extends Announce
                 $this->capacite_accueil,
                 $this->equipement,
                 $this->title
-                // $this->galorie
-
             ];
 
             $db = $this->pdo;
@@ -129,9 +127,11 @@ class Offer extends Announce
             return "Erreur: " . $e->getMessage();
         }
     }
+
+    
     public function getoffer($announce_id){
         $query="SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
-                        a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
+                        a.available_at, a.announce_type, a.budget, a.regles_cohabitation, a.is_reported,
                         a.criteres_colocataire, a.capacite_accueil, a.equipements, 
                         a.zones_souhaitees, a.demand_type, a.move_in_date,
                         u.user_id, u.full_name , u.origin_city,u.photo
