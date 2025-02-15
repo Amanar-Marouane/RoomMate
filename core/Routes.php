@@ -30,19 +30,23 @@ $router->route("post", "message/{user_id}", new MessageController, "send");
 $router->route("post", "message/redefine/{user_id}", new MessageController, "redefine");
 
 // les routes de l'admin : 
-$router->route("get", "admin/users", new AdminController, "showViewUser");
-$router->route("post", "admin/users/updatestatus", new AdminController, "updateStatus");
-$router->route("post", "admin/users/deleteuser", new AdminController, "deleteUser");
-$router->route("get", "admin/announces", new AdminController, "showViewAnnounces");
-$router->route("post", "admin/announces/validate", new AdminController, "validation");
-$router->route("post", "admin/announces/delete", new AdminController, "deleteAnnounce");
-$router->route("post", "profile/deleteannonce", new AdminController, "deleteAnnounce");
-$router->route("get", "verifycompte", new UserController, "verifyCompteForm");
-$router->route("post", "verifycompte", new UserController, "verifyCode");
-$router->route("get", "forgotpassword", new UserController, "forgotPassword");
-$router->route("post", "forgotpassword", new UserController, "resetPassword");
-$router->route("get", "initialpsswd", new UserController, "initialPsswd");
-$router->route("post", "initialpsswd", new UserController, "restartPsswd");
+$router->route("get", "admin/users", new AdminController, "showViewUser");  // admin
+$router->route("post", "admin/users/updatestatus", new AdminController, "updateStatus");  // admin
+$router->route("post", "admin/users/deleteuser", new AdminController, "deleteUser");  // admin
+$router->route("get", "admin/reports", new AdminController, "showViewReports");  // admin
+$router->route("get", "admin/announces", new AdminController, "showViewAnnounces");  // admin
+$router->route("post", "admin/announces/validate", new AdminController, "validation");  // admin
+$router->route("post", "admin/announces/delete", new AdminController, "deleteAnnounce"); // admin
+$router->route("get", "verifycompte", new UserController, "verifyCompteForm"); // all
+$router->route("post", "verifycompte", new UserController, "verifyCode"); // all
+$router->route("get", "forgotpassword", new UserController, "forgotPassword"); // all
+$router->route("post", "forgotpassword", new UserController, "resetPassword"); // all
+$router->route("get", "initialpsswd", new UserController, "initialPsswd"); // all
+$router->route("post", "initialpsswd", new UserController, "restartPsswd"); // all
+$router->route("post", "profile/deleteannonce", new AdminController, "deleteAnnounce"); //student
+$router->route("post", "admin/reports/delete", new AdminController, "deleteReport");  // admin
+$router->route("post", "admin/reports/ignorerreport", new AdminController, "ignorerReport");  // admin
+$router->route("post", "annonce/report", new AnnonceController, "addToReport");
 
 // route for showing login
 $router->route("get", "login", new UserController, "showLogin");

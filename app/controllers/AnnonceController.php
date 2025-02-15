@@ -274,4 +274,22 @@ class AnnonceController
     // }
 
 
+    public function addToReport()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['btn_report'])) {
+                $type = $_POST['type_annonce'];
+                $ignorer = htmlspecialchars($_POST['report']);
+                $id_announce = $_POST['id_announce'];
+                $info = $this->demand->ignorerReport($ignorer, $id_announce);
+                if ($info && $type === 'Demande') {
+                    header("location: /demande?demand_id=$id_announce");
+                }
+                elseif ($info && $type === 'Offre') {
+                    header("location: /offer?offer_id=$id_announce");
+                }
+            }
+        }
+    }
+
 }
