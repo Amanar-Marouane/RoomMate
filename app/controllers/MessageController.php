@@ -2,8 +2,8 @@
 
 namespace app\controllers;
 
-use __PHP_Incomplete_Class;
 use app\models\Message;
+use Dotenv\Dotenv;
 
 class MessageController
 {
@@ -23,6 +23,10 @@ class MessageController
         $person = $this->linker->redefine($_SESSION['user_id']);
         extract($person, EXTR_PREFIX_ALL, "my");
         $history = $this->linker->conversations_history($_SESSION['user_id']);
+
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../../core/");
+        $dotenv->load();
+        extract($_ENV);
         include __DIR__ . "/../views/message.view.php";
     }
 

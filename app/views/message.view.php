@@ -24,7 +24,7 @@
 
         conn.onmessage = function(e) {
             let message = JSON.parse(e.data);
-            // console.log("Raw data received:", e);
+            // console.log("Raw data received:", message);
             // console.log("Parsed message:", message);
 
             // console.log("Expected fields:", {
@@ -33,9 +33,8 @@
             //     content: message.content
             // });
 
-            redefine(message.user_id, message.content);
+            redefine(message.content, message.photo, message.full_name);
         };
-
         messageForm.addEventListener("submit", function(event) {
             event.preventDefault();
 
@@ -53,6 +52,8 @@
                         content: contentInput.value,
                         user_id: myUserId,
                         to_user_id: toUserId,
+                        photo: <?= json_encode($my_photo) ?>,
+                        full_name: <?= json_encode($my_full_name) ?>,
                     };
 
                     // console.log("Sending message:", message);
@@ -81,21 +82,12 @@
             }));
         });
 
-        function redefine(id, content) {
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("POST", "/message/redefine/" + id, true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    let info = JSON.parse(xhr.responseText);
-
-                    let messageElement = `
+        function redefine(content, photo, full_name) {
+            let messageElement = `
                     <div class="flex gap-2 items-start flex-col">
                         <div class="flex items-center">
-                            <img src="${info.photo}" alt="User" class="w-8 h-8 rounded-full mt-1">
-                            <p class="font-bold text-l">${info.full_name}</p>
+                            <img src="${photo}" alt="User" class="w-8 h-8 rounded-full mt-1">
+                            <p class="font-bold text-l">${full_name}</p>
                         </div>
                         <div class="bg-gray-100 rounded-lg p-3 max-w-md">
                             <p>${content}</p>
@@ -103,12 +95,8 @@
                     </div>
                 `;
 
-                    chatContainer.innerHTML += messageElement;
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }
-            };
-
-            xhr.send();
+            chatContainer.innerHTML += messageElement;
+            chatContainer.scrollTop = chatContainer.scrollHeight;
         }
     });
 </script>
@@ -170,19 +158,5 @@
     </div>
 </div>
 
-<footer class="mt-16 bg-indigo-900 text-white rounded-lg p-8">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-2xl font-bold mb-4">Roommate</h2>
-        <p class="text-gray-300 mb-8">Our mission is to help you find a student roommate easily</p>
-        <div class="flex gap-8">
-            <a href="#" class="hover:text-gray-300">Home</a>
-            <a href="#" class="hover:text-gray-300">Contact us</a>
-            <a href="#" class="hover:text-gray-300">Privacy Policy</a>
-            <a href="#" class="hover:text-gray-300">Term of use</a>
-        </div>
-    </div>
-</footer>
-</div>
-</body>
 
-</html>
+<?php include __DIR__ . "/partials/footer.view.php" ?>

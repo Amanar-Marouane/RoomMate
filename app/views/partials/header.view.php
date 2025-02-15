@@ -30,19 +30,25 @@ include __DIR__ . "/head.view.php";
                 <li class='mb-6 hidden max-lg:block'>
                     <a href="/home" class="text-indigo-500 font-bold text-2xl">Roomate</a>
                 </li>
+
                 <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
                     <button
                         class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
-                        Get started
+                        <a href="/home">Home</a>
                     </button>
                 </li>
-                <!-- <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
-                        <button
-                            class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
-                            Sign up
-                        </button>
-                    </li> -->
-
+                <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                    <button
+                        class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                        <a href="/profile">Profile</a>
+                    </button>
+                </li>
+                <li class='max-lg:border-b border-gray-300 max-lg:py-3 px-3'>
+                    <button
+                        class='px-4 py-2 text-sm rounded-lg font-bold text-white border-2 border-white bg-blue-500 transition-all ease-in-out duration-300 hover:bg-transparent hover:text-blue-500 hover:border-blue-500'>
+                        <a href="/logout">logout</a>
+                    </button>
+                </li>
             </ul>
         </div>
 
