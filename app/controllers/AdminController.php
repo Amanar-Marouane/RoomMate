@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\{User,Demand};
+use app\models\{User, Demand};
 
 class AdminController
 {
@@ -11,7 +11,7 @@ class AdminController
     public function __construct()
     {
         $this->admin = new User;
-        $this->annonce = new Demand("","","","","","","","","");
+        $this->annonce = new Demand;
     }
 
     // Gestion de users ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -22,7 +22,7 @@ class AdminController
         extract($info);
         include __DIR__ . "/../views/admin/users.view.php";
     }
-    
+
     // **************************************************************************************************************************************
     public function updateStatus()
     {
@@ -37,7 +37,7 @@ class AdminController
             }
         }
     }
-    
+
     // **************************************************************************************************************************************
     public function deleteUser()
     {
@@ -51,18 +51,24 @@ class AdminController
             }
         }
     }
-    
-    
+
+
     // Gestion de annonces : ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     // **************************************************************************************************************************************
+    public function showViewReports()
+    {
+        $info = $this->annonce->showAllReports();
+        extract($info);
+        include __DIR__ . "/../views/admin/reports.view.php";
+    }
     public function showViewAnnounces()
     {
         $info = $this->annonce->showAllAnnounces();
         extract($info);
         include __DIR__ . "/../views/admin/announces.view.php";
     }
-    
-    
+
+    // **************************************************************************************************************************************
     public function validation()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -76,6 +82,8 @@ class AdminController
             }
         }
     }
+
+    // **************************************************************************************************************************************
     public function deleteAnnounce()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -84,9 +92,37 @@ class AdminController
                 $info = $this->annonce->deleteAnnounce($id_announce);
                 if ($info && $_SESSION['role'] === "admin") {
                     header("location: /admin/announces");
-                }
-                elseif ($info && $_SESSION['id_loget_role'] === "student") {
+                } elseif ($info && $_SESSION['role'] === "student") {
                     header("location: /profile");
+                }
+            }
+        }
+    }
+
+    // **************************************************************************************************************************************
+    public function deleteReport()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['btn_delete_reports'])) {
+                $id_announce = $_POST['id_announce'];
+                $info = $this->annonce->deleteAnnounce($id_announce);
+                if ($info) {
+                    header("location: /admin/reports");
+                }
+            }
+        }
+    }
+
+    // **************************************************************************************************************************************
+    public function ignorerReport()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['btn_report'])) {
+                $ignorer = htmlspecialchars($_POST['report']);
+                $id_announce = $_POST['id_announce'];
+                $info = $this->annonce->ignorerReport($ignorer, $id_announce);
+                if ($info) {
+                    header("location: /admin/reports");
                 }
             }
         }

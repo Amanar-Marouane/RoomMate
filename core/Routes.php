@@ -31,13 +31,16 @@ $router->route("post", "admin/users/deleteuser", new AdminController, "deleteUse
 $router->route("get", "admin/announces", new AdminController, "showViewAnnounces")->only("admin");
 $router->route("post", "admin/announces/validate", new AdminController, "validation")->only("admin");
 $router->route("post", "admin/announces/delete", new AdminController, "deleteAnnounce")->only("admin");
-$router->route("post", "profile/deleteannonce", new AdminController, "deleteAnnounce")->only("admin");
+$router->route("post", "profile/deleteannonce", new AdminController, "deleteAnnounce")->only("student");
 $router->route("get", "verifycompte", new UserController, "verifyCompteForm")->only("guest");
 $router->route("post", "verifycompte", new UserController, "verifyCode")->only("guest");
 $router->route("get", "forgotpassword", new UserController, "forgotPassword")->only("guest");
 $router->route("post", "forgotpassword", new UserController, "resetPassword")->only("guest");
 $router->route("get", "initialpsswd", new UserController, "initialPsswd")->only("guest");
 $router->route("post", "initialpsswd", new UserController, "restartPsswd")->only("guest");
+$router->route("post", "admin/reports/delete", new AdminController, "deleteReport")->only("admin");
+$router->route("post", "admin/reports/ignorerreport", new AdminController, "ignorerReport")->only("admin");
+$router->route("post", "annonce/report", new AnnonceController, "addToReport")->only("student");
 
 
 $router->route("get", "annonce", new AnnonceController, "showAnnonce")->only("auth");
