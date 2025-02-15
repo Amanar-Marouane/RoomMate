@@ -99,14 +99,7 @@ class UserController
                         $_SESSION['username'] = $user['full_name'];
                         $_SESSION['role'] = $user['role'];
 
-                        //redirect based on role
-                        if ($user['role'] === 'admin') {
-                            // $this->show();
-                            exit;
-                        } elseif ($user['role'] === 'student') {
-                            header("Location: /profile");
-                            exit;
-                        }
+                        header("Location: /profile");
                     }
                 } else {
                     $data['login_err'] = 'Invalid password';
