@@ -42,7 +42,9 @@ class MyChat implements MessageComponentInterface
                     "content" => $data["message"] ?? $data["content"],
                     "user_id" => $data["user_id"],
                     "to_user_id" => $data["to_user_id"],
-                    "room" => $roomId
+                    "room" => $roomId,
+                    "photo" => $data["photo"],
+                    "full_name" => $data["full_name"],
                 ];
 
                 // echo "Sending message: " . print_r($messageToSend, true) . "\n";

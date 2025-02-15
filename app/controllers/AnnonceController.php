@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\{Offer, Demand};
 use Exception;
+use Dotenv\Dotenv;
 
 class AnnonceController
 {
@@ -215,7 +216,9 @@ class AnnonceController
     {
         $announces = $this->offer->all_announce($_SESSION['user_id']);
         extract($announces);
-
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../../core/");
+        $dotenv->load();
+        extract($_ENV);
         include __DIR__ . "/../views/liste.php";
     }
 
@@ -246,7 +249,7 @@ class AnnonceController
 
         include __DIR__ . "/../views/offer.view.php";
     }
-    
+
     public function getdemande()
     {
         $announce_id = $_GET['demand_id'];

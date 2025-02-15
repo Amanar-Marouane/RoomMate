@@ -31,7 +31,8 @@ class UserController
         include __DIR__ . "/../views/profile.view.php";
     }
 
-    public function showHomePage(){
+    public function showHomePage()
+    {
         include __DIR__ . '/../views/homePage.php';
     }
 
@@ -75,12 +76,14 @@ class UserController
             $user = $this->user->login($data['email']);
 
             //check if user exists or not
-            if(!$user){$data['login_err'] = 'User not found';
+            if (!$user) {
+                $data['login_err'] = 'User not found';
             }
 
             if ($user) {
                 //verify the password
-                if (!password_verify($data['password'], $user['password'])){$data['password_err'] = 'Incorrect password';
+                if (!password_verify($data['password'], $user['password'])) {
+                    $data['password_err'] = 'Incorrect password';
                 }
 
                 if (password_verify($data['password'], $user['password'])) {
@@ -116,7 +119,7 @@ class UserController
         //load view with errors
         $this->showLogin($data);
         exit();
-        }
+    }
 
     // register
     public function register()
@@ -357,5 +360,12 @@ class UserController
                 }
             }
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        header("Location: /login");
+        exit;
     }
 }
