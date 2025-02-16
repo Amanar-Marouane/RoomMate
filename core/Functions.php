@@ -27,29 +27,18 @@ function request_method()
 
 function formatPreferences($preferences)
 {
+    $preferences = json_decode($preferences, true);
     if (is_string($preferences)) {
-        $preferences = json_decode($preferences, true);
+        return $preferences;
     }
 
     if (!is_array($preferences) || empty($preferences)) {
-        return "No preferences set";
+        return "No preferences set.";
     }
 
-    $formatted = [];
-
-    foreach ($preferences as $key => $value) {
-        if (is_bool($value)) {
-            $formatted[] = "$key: " . ($value ? 'Yes' : 'No');
-            continue;
-        }
-
-        if (is_array($value)) {
-            $formatted[] = "$key: " . implode(', ', $value);
-            continue;
-        }
-
-        $formatted[] = "$key: $value";
+    $res = "";
+    foreach ($preferences as $preference) {
+        $res .= "$preference || ";
     }
-
-    return implode(' | ', $formatted);
+    return $preferences[0];
 }
