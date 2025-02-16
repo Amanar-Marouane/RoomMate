@@ -30,7 +30,21 @@ CREATE TABLE `users` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 7 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci
 
 
+-- trigger pour metrre le premier inserer dans la table des user comme un admin : 
+DELIMITER $$
 
+CREATE TRIGGER before_insert_user
+BEFORE INSERT ON users
+FOR EACH ROW
+BEGIN
+    IF (SELECT COUNT(*) FROM users) = 0 THEN
+        SET NEW.role = 'Admin';
+    END IF;
+END$$
+
+DELIMITER ;
+
+-- 
 
 CREATE TABLE `announce` (
     `announce_id` int NOT NULL AUTO_INCREMENT,

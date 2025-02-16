@@ -94,11 +94,11 @@
                                 <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full"><?= $budget ?> DH</span>
                             </div>
                             <div class="flex gap-2 mt-4">
-                                <button class="text-gray-400 hover:text-red-600">
+                                <a href="/profile/updateannounce/<?= $announce_id ?>" class="text-gray-400 hover:text-red-600">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                     </svg>
-                                </button>
+                                </a>
                                 <form action="/profile/deleteannonce" method="post">
                                     <input type="hidden" name="id_announce" value="<?= $announce_id ?>">
                                     <button name="btn_delete_announce" class="text-gray-400 hover:text-indigo-600">
@@ -135,11 +135,11 @@
                                 <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full"><?= $budget ?> DH</span>
                             </div>
                             <div class="flex gap-2 mt-4">
-                                <button class="text-gray-400 hover:text-indigo-600">
+                                <a href="/profile/updateannounce/<?= $announce_id ?>" class="text-gray-400 hover:text-indigo-600">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                     </svg>
-                                </button>
+                                </a>
                                 <form action="/profile/deleteannonce" method="post">
                                     <input type="hidden" name="id_announce" value="<?= $announce_id ?>">
                                     <button name="btn_delete_announce" class="text-gray-400 hover:text-indigo-600">

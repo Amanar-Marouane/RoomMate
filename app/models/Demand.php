@@ -147,4 +147,44 @@ class Demand extends Announce
 
     return $this->pdo->fetchAll($stmt, $params) ?: [];
   }
+
+  public function update_demande(
+    $announce_id,
+    $title,
+    $description,
+    $localisation,
+    $address,
+    $available_at,
+    $budget,
+    $move_in_date,
+    $zones_souhaitees,
+    $demand_type
+  ) {
+    $query = "UPDATE announce SET 
+                title = ? ,
+                description = ?,
+                localisation = ?,
+                address = ?,
+                available_at = ?,
+                budget = ?,
+                move_in_date = ?,
+                zones_souhaitees = ?,
+                demand_type = ?
+                WHERE announce_id = ? ";
+    $params = [
+      $title,
+      $description,
+      $localisation,
+      $address,
+      $available_at,
+      $budget,
+      $move_in_date,
+      $zones_souhaitees,
+      $demand_type,
+      $announce_id
+    ];
+
+    $db = $this->pdo;
+    return $db->query($query, $params);
+  }
 }
