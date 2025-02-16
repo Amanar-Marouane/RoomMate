@@ -115,15 +115,16 @@ class Demand extends Announce
     $stmt = "SELECT announce.*, users.full_name, users.photo, users.origin_city
             FROM announce
             JOIN users ON users.user_id = announce.user_id
-            WHERE title LIKE ? AND description LIKE ?";
+            WHERE (title LIKE ? OR description LIKE ?)";
+
     $params = ["%$search%", "%$search%"];
 
-    if (!empty($min_budget)) {
+    if (!is_null($min_budget)) {
       $stmt .= " AND budget >= ?";
       $params[] = $min_budget;
     }
 
-    if (!empty($max_budget)) {
+    if (!is_null($max_budget)) {
       $stmt .= " AND budget <= ?";
       $params[] = $max_budget;
     }
@@ -134,7 +135,8 @@ class Demand extends Announce
     }
 
     if (!empty($available_at)) {
-      $stmt .= " AND available_at <= ?";
+      $available_at = implode('-', array_reverse(explode('-', $available_at)));
+      $stmt .= " AND available_at >= ?";
       $params[] = $available_at;
     }
 
@@ -143,9 +145,7 @@ class Demand extends Announce
       $params[] = $type;
     }
 
-    $results = $this->pdo->fetchAll($stmt, $params);
-
-    return $results ?: [];
+    return $this->pdo->fetchAll($stmt, $params) ?: [];
   }
 
   public function update_demande(
