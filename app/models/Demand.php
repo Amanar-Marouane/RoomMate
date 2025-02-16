@@ -12,6 +12,7 @@ class Demand extends Announce
   protected $pdo;
 
   private $move_in_date;
+  
   public function __construct(
     $type = "",
     $localisation = "",
@@ -48,7 +49,7 @@ class Demand extends Announce
 
     ];
   }
-  public function setAttribut($type, $localisation, $address, $description, $budget, $available_at, $zones_souhaitees, $demand_type, $move_in_date)
+  public function setAttribut($type, $localisation, $address, $description, $budget, $available_at, $zones_souhaitees, $demand_type, $move_in_date,$title)
   {
     return [
       $this->localisation = $localisation,
@@ -60,7 +61,7 @@ class Demand extends Announce
       $this->move_in_date = $move_in_date,
       $this->demand_type = $demand_type,
       $this->announce_type = $type,
-      $this->title
+      $this->title = $title,
 
 
     ];
@@ -70,9 +71,8 @@ class Demand extends Announce
   {
 
 
-    $query = "INSERT INTO announce (user_id, localisation, address, description, 
-                 available_at, announce_type, budget, zones_souhaitees, demand_type, move_in_date,title) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+    $query = "INSERT INTO announce (user_id,localisation,address,description,available_at,announce_type,budget,zones_souhaitees,demand_type,move_in_date,title) 
+                 VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
     $params = [
       $studentid,
@@ -95,7 +95,7 @@ class Demand extends Announce
   public function getdemand($announce_id)
   {
     $query = "SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
-                    a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
+                    a.available_at, a.announce_type, a.budget, a.regles_cohabitation, a.is_reported,
                     a.criteres_colocataire, a.capacite_accueil, a.equipements, 
                     a.zones_souhaitees, a.demand_type, a.move_in_date,
                     u.user_id, u.full_name , u.origin_city,u.photo

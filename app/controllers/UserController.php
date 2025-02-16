@@ -6,27 +6,33 @@ namespace app\controllers;
 
 use app\models\User;
 use App\Models\MailerModel;
+use App\Models\Offer;
 
 
 class UserController
 {
     private $user;
     private $mailModel;
+    private $annonce;
     public function __construct()
     {
         $this->user = new User;
         $this->mailModel = new MailerModel;
+        $this->annonce = new Offer;
     }
 
     public function showProfile()
     {
-        $user_id = $_SESSION["user_id"] ?? 1;
+        $user_id = $_SESSION["user_id"];
         $info = $this->user->userInfo($user_id);
+        $offers = $this->annonce->ShowMyAnnounce($user_id, "Offre");
+        $demands = $this->annonce->ShowMyAnnounce($user_id, "Demande");
         extract($info);
         include __DIR__ . "/../views/profile.view.php";
     }
 
-    public function showHomePage(){
+    public function showHomePage()
+    {
         include __DIR__ . '/../views/homePage.php';
     }
 
@@ -70,16 +76,20 @@ class UserController
             $user = $this->user->login($data['email']);
 
             //check if user exists or not
-            if(!$user){$data['login_err'] = 'User not found';
+            if (!$user) {
+                $data['login_err'] = 'User not found';
             }
 
             if ($user) {
                 //verify the password
-                if (!password_verify($data['password'], $user['password'])){$data['password_err'] = 'Incorrect password';
+                if (!password_verify($data['password'], $user['password'])) {
+                    $data['password_err'] = 'Incorrect password';
                 }
 
                 if (password_verify($data['password'], $user['password'])) {
                     //check user status
+
+                    // var_dump($user);
                     if ($user['status'] === 'desactive') {
                         $data['login_err'] = 'Inactive user. Please verify your email';
                         $this->showLogin($data);
@@ -89,14 +99,7 @@ class UserController
                         $_SESSION['username'] = $user['full_name'];
                         $_SESSION['role'] = $user['role'];
 
-                        //redirect based on role
-                        if ($user['role'] === 'admin') {
-                            // $this->show();
-                            exit;
-                        } elseif ($user['role'] === 'student') {
-                            header("Location: /profile");
-                            exit;
-                        }
+                        header("Location: /profile");
                     }
                 } else {
                     $data['login_err'] = 'Invalid password';
@@ -109,7 +112,7 @@ class UserController
         //load view with errors
         $this->showLogin($data);
         exit();
-        }
+    }
 
     // register
     public function register()
@@ -181,7 +184,6 @@ class UserController
                         $data['photo_err'] = $uploadResult['error'];
                     }
                 }
-
                 //register user
                 if ($this->user->registerUser($data['username'], $data['email'], $data['password'], $data['year_of_study'], $data['origin_city'], $data['current_city'], $data['bio'], $data['reference'], $data['preferences'], $picture)) {
                     $this->sendCodeToEmail($data['username'], $data['email']);
@@ -236,7 +238,7 @@ class UserController
     public function sendCodeToEmail($full_name, $email)
     {
         $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-        $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
+        $expiry = date("Y-m-d H:i:s", strtotime("+2 hour"));
 
         $res = $this->user->addCode($email, $code, $expiry);
 
@@ -277,8 +279,10 @@ class UserController
                     $result = $this->user->deleteCodeByEmail($email);
 
                     header("Location: /login");
+                    exit();
                 }
             }
+            header("Location: /verifycompte?email=$email");
         }
     }
 
@@ -301,7 +305,7 @@ class UserController
 
                 if ($user) {
                     $token = bin2hex(random_bytes(16));
-                    $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
+                    $expiry = date("Y-m-d H:i:s", strtotime("+2 hour"));
 
                     $res = $this->user->addToken($email, $token, $expiry);
 
@@ -351,5 +355,12 @@ class UserController
                 }
             }
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        header("Location: /login");
+        exit;
     }
 }

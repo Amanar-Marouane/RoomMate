@@ -236,6 +236,7 @@
 
             xhr.open("POST", "announces/search", true);
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader('X-System-Request', '<?= htmlspecialchars($X_SYSTEM_REQUEST, ENT_QUOTES, 'UTF-8') ?>');
 
             xhr.onload = function() {
                 if (xhr.status === 200) {

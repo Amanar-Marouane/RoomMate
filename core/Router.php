@@ -28,7 +28,7 @@ class Router
         foreach ($this->routes[$method] as $route) {
             $pattern =  preg_replace("#\{\w+\}#", "([^\/]+)", $route["uri"]);
             if (preg_match("#^$pattern$#", $uri, $matches)) {
-                $allowed = $route['middleware'];
+                $allowed = $route["middleware"];
                 if (!is_null($allowed)) {
                     $middleware->middlewareHandler($allowed);
                 };
@@ -41,8 +41,15 @@ class Router
         include __DIR__ . "/../app/views/404.view.php";
     }
 
-    public function only($key)
+    public function only($method, $key)
     {
-        $this->routes[array_key_last($this->routes)]["middleware"] = $key;
+        if (!isset($this->routes[$method]) || empty($this->routes[$method])) {
+            return $this;
+        }
+        $lastIndex = array_key_last($this->routes[$method]);
+        if ($lastIndex !== null) {
+            $this->routes[$method][$lastIndex]["middleware"] = $key;
+        }
+        return $this;
     }
 }

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\{Offer, Demand};
 use Exception;
+use Dotenv\Dotenv;
 
 class AnnonceController
 {
@@ -24,8 +25,6 @@ class AnnonceController
     {
         include __DIR__ . "/../views/liste.php";
     }
-
-
 
     // public function insertted(array $photos)
     // {
@@ -54,6 +53,8 @@ class AnnonceController
 
     //     return $uploaded_photos;
     // }
+
+
     public function insertted(array $photos)
     {
         $upload_directory = "assets/";
@@ -75,7 +76,7 @@ class AnnonceController
             if (!empty($tmpName)) {
                 $file_basename = pathinfo($photos["name"][$index], PATHINFO_FILENAME);
                 $file_extension = pathinfo($photos["name"][$index], PATHINFO_EXTENSION);
-                $new_image_name = $file_basename . '_' . date("Ymd_His") . '.' . $file_extension;
+                $new_image_name = $file_basename . '' . date("Ymd_His") . '.' . $file_extension;
                 $target_file = $upload_directory . $new_image_name;
 
                 if (move_uploaded_file($tmpName, $target_file)) {
@@ -96,13 +97,11 @@ class AnnonceController
 
 
 
+
     public function ajoute_annonce()
     {
 
         if (isset($_POST['ajouter'])) {
-
-
-
             $title = isset($_POST['titre']) ? $_POST['titre'] : "";
             $type = isset($_POST['type']) ? $_POST['type'] : "";
             $description = isset($_POST['description']) ? $_POST['description'] : "";
@@ -111,11 +110,6 @@ class AnnonceController
             $budget = isset($_POST['budget']) ? $_POST['budget'] : 0;
             $available_at = isset($_POST['disponsibilite']) ? $_POST['disponsibilite'] : null;
             $move_in_date = isset($_POST['move_in_date']) ? $_POST['move_in_date'] : null;
-
-
-
-
-
             $capacite_accueil = isset($_POST['capacite_accueil']) ? $_POST['capacite_accueil'] : 0;
             $equipement = isset($_POST['equipement']) ? $_POST['equipement'] : "";
             $criteres_colocataires = isset($_POST['criteres_colocataires']) ? $_POST['criteres_colocataires'] : "";
@@ -124,6 +118,7 @@ class AnnonceController
 
             $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
             $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
+
             $studentid = $_SESSION['user_id'];
 
             if (!empty($type)) {
@@ -146,7 +141,6 @@ class AnnonceController
                         $galories,
                         $title
                     );
-
                     $annonce = $this->offer->create_annonce($studentid);
                 } else {
                     echo "Ceci est une demande.";
@@ -222,7 +216,9 @@ class AnnonceController
     {
         $announces = $this->offer->all_announce($_SESSION['user_id']);
         extract($announces);
-
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../../core/");
+        $dotenv->load();
+        extract($_ENV);
         include __DIR__ . "/../views/liste.php";
     }
 
@@ -253,7 +249,7 @@ class AnnonceController
 
         include __DIR__ . "/../views/offer.view.php";
     }
-    
+
     public function getdemande()
     {
         $announce_id = $_GET['demand_id'];
@@ -280,5 +276,23 @@ class AnnonceController
     //     include __DIR__ . "/../views/offer.view.php";
     // }
 
+
+    public function addToReport()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_POST['btn_report'])) {
+                $type = $_POST['type_annonce'];
+                $ignorer = htmlspecialchars($_POST['report']);
+                $id_announce = $_POST['id_announce'];
+                $info = $this->demand->ignorerReport($ignorer, $id_announce);
+                if ($info && $type === 'Demande') {
+                    header("location: /demande?demand_id=$id_announce");
+                }
+                elseif ($info && $type === 'Offre') {
+                    header("location: /offer?offer_id=$id_announce");
+                }
+            }
+        }
+    }
 
 }
