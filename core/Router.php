@@ -41,9 +41,8 @@ class Router
         include __DIR__ . "/../app/views/404.view.php";
     }
 
-    public function only($key)
+    public function only($method, $key)
     {
-        $method = strtolower(request_method());
         if (!isset($this->routes[$method]) || empty($this->routes[$method])) {
             return $this;
         }
