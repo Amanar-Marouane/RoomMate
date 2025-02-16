@@ -152,4 +152,35 @@ abstract class Announce
         $stmt = "UPDATE announce SET is_reported = ? WHERE announce_id = ?";
         return $this->pdo->query($stmt, [$ignorer, $id_announce]);
     }
+
+
+
+    public function five_announces()
+    {
+
+        $query = "SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
+                     a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
+                     a.criteres_colocataire, a.capacite_accueil, a.equipements, 
+                     a.zones_souhaitees, a.demand_type, a.move_in_date,
+                     u.user_id, u.full_name, u.origin_city, u.photo
+              FROM announce a 
+              JOIN users u ON a.user_id = u.user_id 
+              LIMIT 5";
+        $db = $this->pdo;
+        return $result = $db->fetchAll($query);
+    }
+
+    public function five_announce()
+    {
+
+        $query = " SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
+                    a.available_at, a.announce_type, a.budget, a.regles_cohabitation, 
+                    a.criteres_colocataire, a.capacite_accueil, a.equipements, 
+                    a.zones_souhaitees, a.demand_type, a.move_in_date,
+                    u.user_id, u.full_name , u.origin_city,u.photo
+                    FROM announce a 
+                    JOIN users u ON a.user_id = u.user_id ORDER BY a.announce_id DESC LIMIT 5";
+        $db = $this->pdo;
+        return $result = $db->fetchAll($query);
+    }
 }

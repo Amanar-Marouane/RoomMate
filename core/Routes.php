@@ -18,7 +18,7 @@ $router->route("post", "login", new UserController, "login");
 
 $router->route("get", "logout", new UserController, "logout")->only("auth");
 
-$router->route("get", "home", new UserController, "showHomePage")->only("auth");
+$router->route("get", "home", new AnnonceController, "showHomePage")->only("auth");
 $router->route("get", "profile", new UserController, "showProfile")->only("auth");
 
 $router->route("get", "message/{user_id}", new MessageController, "message")->only("auth");
@@ -60,3 +60,7 @@ $router->route("get", "liste", new AnnonceController, "details")->only("auth");
 $router->route("get", "demande", new AnnonceController, "getdemande")->only("auth");
 $router->route("get", "offer", new AnnonceController, "getOffer")->only("auth");
 // $router->route("get","offer", new AnnonceController, " getphotos");
+
+
+
+$router->route("get", "all", new AnnonceController, "show_all");

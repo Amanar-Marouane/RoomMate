@@ -31,10 +31,7 @@ class UserController
         include __DIR__ . "/../views/profile.view.php";
     }
 
-    public function showHomePage()
-    {
-        include __DIR__ . '/../views/homePage.php';
-    }
+    
 
     // show register page 
     public function showRegister($data = [])
