@@ -23,7 +23,7 @@ class UserController
 
     public function showProfile()
     {
-        $user_id = $_SESSION["user_id"] ?? 1;
+        $user_id = $_SESSION["user_id"];
         $info = $this->user->userInfo($user_id);
         $offers = $this->annonce->ShowMyAnnounce($user_id, "Offre");
         $demands = $this->annonce->ShowMyAnnounce($user_id, "Demande");
@@ -235,7 +235,7 @@ class UserController
     public function sendCodeToEmail($full_name, $email)
     {
         $code = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-        $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
+        $expiry = date("Y-m-d H:i:s", strtotime("+2 hour"));
 
         $res = $this->user->addCode($email, $code, $expiry);
 
@@ -276,8 +276,10 @@ class UserController
                     $result = $this->user->deleteCodeByEmail($email);
 
                     header("Location: /login");
+                    exit();
                 }
             }
+            header("Location: /verifycompte?email=$email");
         }
     }
 
@@ -300,7 +302,7 @@ class UserController
 
                 if ($user) {
                     $token = bin2hex(random_bytes(16));
-                    $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
+                    $expiry = date("Y-m-d H:i:s", strtotime("+2 hour"));
 
                     $res = $this->user->addToken($email, $token, $expiry);
 
