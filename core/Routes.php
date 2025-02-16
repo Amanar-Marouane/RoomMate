@@ -18,8 +18,8 @@ $router->route("post", "login", new UserController, "login");
 
 $router->route("get", "logout", new UserController, "logout")->only("get", "auth");
 
-$router->route("get", "home", new AnnonceController, "showHomePage")->only("auth");
-$router->route("get", "profile", new UserController, "showProfile")->only("auth");
+$router->route("get", "home", new AnnonceController, "showHomePage")->only("get", "auth");
+$router->route("get", "profile", new UserController, "showProfile")->only("get", "auth");
 
 $router->route("get", "message/{user_id}", new MessageController, "message")->only("get", "auth");
 $router->route("post", "message/{user_id}", new MessageController, "send")->only("post", "auth");
