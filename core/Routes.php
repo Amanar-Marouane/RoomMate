@@ -25,6 +25,17 @@ $router->route("get", "message/{user_id}", new MessageController, "message")->on
 $router->route("post", "message/{user_id}", new MessageController, "send")->only("post", "auth");
 
 // les routes de l'admin : 
+<<<<<<< HEAD
+$router->route("get", "admin/users", new AdminController, "showViewUser")->only("admin");
+$router->route("post", "admin/users/updatestatus", new AdminController, "updateStatus")->only("admin");
+$router->route("post", "admin/users/deleteuser", new AdminController, "deleteUser")->only("admin");
+$router->route("get", "admin/announces", new AdminController, "showViewAnnounces")->only("admin");
+$router->route("post", "admin/announces/validate", new AdminController, "validation")->only("admin");
+$router->route("post", "admin/announces/delete", new AdminController, "deleteAnnounce")->only("admin");
+$router->route("post", "profile/deleteannonce", new AdminController, "deleteAnnounce")->only("student");
+$router->route("get", "verifycompte", new UserController, "verifyCompteForm")->only("guest");
+$router->route("post", "verifycompte", new UserController, "verifyCode")->only("guest");
+=======
 $router->route("get", "admin/users", new AdminController, "showViewUser")->only("get", "admin");
 $router->route("post", "admin/users/updatestatus", new AdminController, "updateStatus")->only("post", "admin");
 $router->route("post", "admin/users/deleteuser", new AdminController, "deleteUser")->only("post", "admin");
@@ -34,13 +45,22 @@ $router->route("post", "admin/announces/delete", new AdminController, "deleteAnn
 $router->route("post", "profile/deleteannonce", new AdminController, "deleteAnnounce")->only("post", "student");
 $router->route("get", "verifycompte", new UserController, "verifyCompteForm");
 $router->route("post", "verifycompte", new UserController, "verifyCode");
+>>>>>>> db1a32fa54894e845ee2c368d650ffca6b91a142
 $router->route("get", "forgotpassword", new UserController, "forgotPassword");
 $router->route("post", "forgotpassword", new UserController, "resetPassword");
 $router->route("get", "initialpsswd", new UserController, "initialPsswd");
 $router->route("post", "initialpsswd", new UserController, "restartPsswd");
+<<<<<<< HEAD
+$router->route("post", "admin/reports/delete", new AdminController, "deleteReport")->only("admin");
+$router->route("post", "admin/reports/ignorerreport", new AdminController, "ignorerReport")->only("admin");
+$router->route("post", "annonce/report", new AnnonceController, "addToReport")->only("student");
+$router->route("get", "profile/updateannounce/{announce_id}", new AnnonceController, "updateAnnouce")->only("student");
+$router->route("post", "profile/updateannounce", new AnnonceController, "updateAnnouceForm")->only("student");
+=======
 $router->route("post", "admin/reports/delete", new AdminController, "deleteReport")->only("post", "admin");
 $router->route("post", "admin/reports/ignorerreport", new AdminController, "ignorerReport")->only("post", "admin");
 $router->route("post", "annonce/report", new AnnonceController, "addToReport")->only("post", "student");
+>>>>>>> db1a32fa54894e845ee2c368d650ffca6b91a142
 
 
 $router->route("get", "annonce", new AnnonceController, "showAnnonce")->only("get", "auth");
