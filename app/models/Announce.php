@@ -152,4 +152,10 @@ abstract class Announce
         $stmt = "UPDATE announce SET is_reported = ? WHERE announce_id = ?";
         return $this->pdo->query($stmt, [$ignorer, $id_announce]);
     }
+    
+    public function getAnnounce($announce_id){
+        $stmt = "SELECT * FROM announce WHERE announce_id = ?";
+        return $this->pdo->fetch($stmt, [$announce_id]);
+    }
+
 }
