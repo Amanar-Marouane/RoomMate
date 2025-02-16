@@ -23,7 +23,7 @@ class UserController
 
     public function showProfile()
     {
-        $user_id = $_SESSION["user_id"] ?? 1;
+        $user_id = $_SESSION["user_id"];
         $info = $this->user->userInfo($user_id);
         $offers = $this->annonce->ShowMyAnnounce($user_id, "Offre");
         $demands = $this->annonce->ShowMyAnnounce($user_id, "Demande");
