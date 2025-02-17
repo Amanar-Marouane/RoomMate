@@ -142,6 +142,7 @@ class AnnonceController
                         $title
                     );
                     $annonce = $this->offer->create_annonce($studentid);
+                    header("Location: /profile");
                 } else {
                     echo "Ceci est une demande.";
                     echo " annonce" . $type;
@@ -159,6 +160,7 @@ class AnnonceController
                         $title
                     );
                     $annonce = $this->demand->create_annonce($studentid);
+                    header("Location: /profile");
                 }
             } else {
                 echo "Le type d'annonce est invalide.";
@@ -354,9 +356,9 @@ class AnnonceController
                     );
                 }
 
-                if($annonce){
+                if ($annonce) {
                     header("location: /profile");
-                }else{
+                } else {
                     header("location: /profile/updateannounce/$announce_id");
                 }
             } else {
@@ -365,5 +367,15 @@ class AnnonceController
         } else {
             echo "nothing";
         }
+    }
+    public function showHomePage()
+    {
+        $announces = $this->offer->five_announce();
+        extract($announces);
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../../core/");
+        $dotenv->load();
+        extract($_ENV);
+
+        include __DIR__ . '/../views/homePage.php';
     }
 }
