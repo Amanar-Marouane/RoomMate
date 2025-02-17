@@ -120,8 +120,8 @@ class Offer extends Announce
                 $db->query($querypicture, $parametres);
             }
 
-            $this->pdo->commit();
-            return "Annonce ajoutée avec succès !";
+
+            return $this->pdo->commit();
         } catch (PDOException $e) {
             $this->pdo->rollback();
             return "Erreur: " . $e->getMessage();

@@ -88,9 +88,7 @@ class Demand extends Announce
       $this->title
     ];
     $db = $this->pdo;
-    $db->query($query, $params);
-
-    return "Annonce créée avec succès !";
+    return $db->query($query, $params);
   }
   public function getdemand($announce_id)
   {
