@@ -1,21 +1,18 @@
 <?php
 
+namespace core;
+
 use core\Middleware\Middleware;
 
-require_once __DIR__ . "/Functions.php";
-require_once __DIR__ . "/AutoLoader.php";
-
-AutoLoader::autoloader();
 class Router
 {
     private array $routes = [];
 
-    public function route($method, string $uri, $filePath, $class = null, $class_method = null)
+    public function route($method, string $uri, $class = null, $class_method = null)
     {
         $method = strtolower($method);
         $this->routes[$method][] = [
             "uri" => $uri,
-            "path" => $filePath,
             "class" => $class,
             "method" => $class_method,
             "middleware" => null,
@@ -31,25 +28,28 @@ class Router
         foreach ($this->routes[$method] as $route) {
             $pattern =  preg_replace("#\{\w+\}#", "([^\/]+)", $route["uri"]);
             if (preg_match("#^$pattern$#", $uri, $matches)) {
-                $allowed = $route['middleware'];
+                $allowed = $route["middleware"];
                 if (!is_null($allowed)) {
                     $middleware->middlewareHandler($allowed);
                 };
-                if (!is_null($route["class"])) {
-                    $instance = $route["class"];
-                    $method = $route["method"];
-                    call_user_func_array([$instance, $method], [$matches[1] ?? ""]);
-                    return;
-                }
-                include __DIR__ . "/../app/{$route["path"]}";
+                $instance = $route["class"];
+                $method = $route["method"];
+                call_user_func_array([$instance, $method], [$matches[1] ?? ""]);
                 return;
             }
         }
         include __DIR__ . "/../app/views/404.view.php";
     }
 
-    public function only($key)
+    public function only($method, $key)
     {
-        $this->routes[array_key_last($this->routes)]["middleware"] = $key;
+        if (!isset($this->routes[$method]) || empty($this->routes[$method])) {
+            return $this;
+        }
+        $lastIndex = array_key_last($this->routes[$method]);
+        if ($lastIndex !== null) {
+            $this->routes[$method][$lastIndex]["middleware"] = $key;
+        }
+        return $this;
     }
 }

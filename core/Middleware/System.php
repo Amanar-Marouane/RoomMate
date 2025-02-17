@@ -18,7 +18,7 @@ class System
         $received_token = $_SERVER['HTTP_X_SYSTEM_REQUEST'] ?? null;
 
         if (is_null($received_token) || $X_SYSTEM_REQUEST != $received_token) {
-            header("Location: /calendar");
+            header("Location: /profile");
         }
     }
 }
