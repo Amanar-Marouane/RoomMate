@@ -66,3 +66,4 @@ $router->route("get", "offer", new AnnonceController, "getOffer")->only("get", "
 
 
 $router->route("get", "all", new AnnonceController, "show_all");
+
