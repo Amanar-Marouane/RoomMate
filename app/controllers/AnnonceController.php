@@ -366,4 +366,15 @@ class AnnonceController
             echo "nothing";
         }
     }
+    public function showHomePage()
+    {
+        $announces = $this->offer->five_announce();
+        extract($announces);
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../../core/");
+        $dotenv->load();
+        extract($_ENV);
+
+        include __DIR__ . '/../views/homePage.php';
+    }
+
 }
