@@ -28,13 +28,13 @@ class MailerModel
             $this->mail->isSMTP();
             $this->mail->Host       = 'smtp.gmail.com'; // Serveur SMTP
             $this->mail->SMTPAuth   = true;
-            $this->mail->Username   = 'yourmaile@gmail.com' ;//$EMAIL_ENVOI; // Remplacez par votre email
-            $this->mail->Password   = 'votre Mot de passe d application';//$PASSWORD_MAIL; // Mot de passe d’application
+            $this->mail->Username   = 'votreemail@gmail.com' ;//$EMAIL_ENVOI; // Remplacez par votre email
+            $this->mail->Password   = 'votre code de app ';//$PASSWORD_MAIL; // Mot de passe d’application
             $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $this->mail->Port       = 587;
 
             // Expéditeur par défaut
-            $this->mail->setFrom('youremail@gmail.com', 'Roomate Team');
+            $this->mail->setFrom('votreemail@gmail.com', 'Roomate Team');
         } catch (Exception $e) {
             error_log("Erreur PHPMailer: " . $e->getMessage());
         }
