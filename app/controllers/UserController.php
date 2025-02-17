@@ -142,8 +142,8 @@ class UserController
             // Validate email domain
             if (!empty($data['email'])) {
                 $emailDomain = substr(strrchr($data['email'], "@"), 1);
-                if ($emailDomain !== 'gmail.com') {
-                    $data['domain_err'] = 'Please use a valid email address: "...@youcode.ma"';
+                if ($emailDomain !== 'student.youcode.ma') {
+                    $data['domain_err'] = 'Please use a valid email address: "...@student.youcode.ma"';
                 }
             }
 
