@@ -302,6 +302,7 @@ class UserController
 
                 if ($user) {
                     $token = bin2hex(random_bytes(16));
+
                     $expiry = date("Y-m-d H:i:s", strtotime("+2 hour"));
 
                     $res = $this->user->addToken($email, $token, $expiry);
@@ -310,7 +311,7 @@ class UserController
                         $resetLink = "http://localhost:8000/initialpsswd?token=$token";
                         $sujet = "Réinitialisation de mot de passe";
                         $body = "<p>Bonjour,</p>  
-                        <p>Cliquez sur ce lien pour réinitialiser votre mot de passe : <a href='$resetLink'>Click ici</a></p>  
+                        <p>Cliquez sur ce lien pour réinitialiser votre mot de passe $resetLink : <a href='$resetLink'>Click ici</a></p>  
                         <p>Cordialement,<br>  
                         <strong>Rommate</strong></p>";
 

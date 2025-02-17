@@ -42,6 +42,8 @@ $router->route("post", "admin/reports/delete", new AdminController, "deleteRepor
 $router->route("post", "admin/reports/ignorerreport", new AdminController, "ignorerReport")->only("post", "admin");
 $router->route("post", "annonce/report", new AnnonceController, "addToReport")->only("post", "student");
 
+$router->route("get", "profile/updateannounce/{announce_id}", new AnnonceController, "updateAnnouce")->only("get","student");
+$router->route("post", "profile/updateannounce", new AnnonceController, "updateAnnouceForm")->only("post","student");
 
 $router->route("get", "annonce", new AnnonceController, "showAnnonce")->only("get", "auth");
 
