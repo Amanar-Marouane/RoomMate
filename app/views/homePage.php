@@ -24,12 +24,12 @@
   <div class="actions">
     <a href="">
       <div class="view_ann">
-        <h3>Discover announces</h3>
+        <a href="/liste"><h3>Discover announces</h3></a>
       </div>
     </a>
     <a href="">
       <div class="create_ann">
-        <h3>Create announce</h3>
+        <a href="/annonce"><h3>Create announce</h3></a>
       </div>
     </a>
   </div>
@@ -39,106 +39,81 @@
 
     <div class="container">
 
-      <!-- Card 1 -->
+      <?php foreach ($announces as $announce):
+                        extract($announce) ?>
+                        <?php if ($announce_type === 'Offre') : ?>
+
       <div class="card">
         <div class="profile">
-          <img src="" alt="Profile">
+          <img src="<?= $photo ?>" alt="Profile">
           <div class="info">
-            <p class="name">Esther Dixon</p>
-            <p class="location">London - 22</p>
+            <p class="name"><?= $full_name ?></p>
+            <p class="location"><?= $origin_city ?></p>
           </div>
         </div>
         <div class="details">
           <div class="column">
             <span class="label">City</span>
-            <span class="value blue">Safi</span>
+            <span class="value blue"><?= $address ?></span>
           </div>
           <div class="column">
             <span class="label">Budget</span>
-            <span class="value blue">800 DH</span>
+            <span class="value blue"><?= $budget ?></span>
           </div>
           <div class="column">
             <span class="label">Availability</span>
-            <span class="value blue">05 november</span>
+            <span class="value blue"><?= $available_at ?></span>
           </div>
           <div class="column">
             <span class="label">Type</span>
-            <span class="value blue">Offer</span>
+            <span class="value blue"><?= $announce_type ?></span>
           </div>
           <div class="column">
             <span class="label">Details</span>
-            <button class="btn blue">⮞</button>
+            <a href="" class="btn blue">⮞</a>
           </div>
         </div>
       </div>
 
-      <!-- Card 2 -->
-      <div class="card">
+      <?php elseif ($announce_type === 'Demande') : ?>
+        <div class="card">
         <div class="profile">
-          <img src="" alt="Profile">
+          <img src="<?= $photo ?>" alt="Profile">
           <div class="info">
-            <p class="name">Alan Turing</p>
-            <p class="location">Edinburgh - 28</p>
+            <p class="name"><?= $full_name ?></p>
+            <p class="location"><?= $origin_city ?></p>
           </div>
         </div>
         <div class="details">
           <div class="column">
             <span class="label">City</span>
-            <span class="value orange">Safi</span>
+            <span class="value orange"><?= $address ?></span>
           </div>
           <div class="column">
             <span class="label">Budget</span>
-            <span class="value orange">500 DH</span>
+            <span class="value orange"><?= $budget ?></span>
           </div>
           <div class="column">
             <span class="label">Availability</span>
-            <span class="value orange">05 november</span>
+            <span class="value orange"><?= $available_at ?></span>
           </div>
           <div class="column">
             <span class="label">Type</span>
-            <span class="value orange">Demand</span>
+            <span class="value orange"><?= $announce_type ?></span>
           </div>
           <div class="column">
-            <button class="btn orange">⮞</button>
+            <span class="label">Details</span>
+            <a href="" class="btn orange">⮞</a>
           </div>
         </div>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="card">
-        <div class="profile">
-          <img src="" alt="Profile">
-          <div class="info">
-            <p class="name">Angel Gregory</p>
-            <p class="location">Bradford - 23</p>
-          </div>
-        </div>
-        <div class="details">
-          <div class="column">
-            <span class="label">City</span>
-            <span class="value blue">Safi</span>
-          </div>
-          <div class="column">
-            <span class="label">Budget</span>
-            <span class="value blue">1200 DH</span>
-          </div>
-          <div class="column">
-            <span class="label">Availability</span>
-            <span class="value blue">05 november</span>
-          </div>
-          <div class="column">
-            <span class="label">Type</span>
-            <span class="value blue">Offer</span>
-          </div>
-          <div class="column">
-            <button class="btn blue">⮞</button>
-          </div>
-        </div>
-      </div>
+      </div>      
+       
+      <?php endif; ?>
+      <?php endforeach; ?>
     </div>
 
-    <div>
-      <button class="all_ann">All announces ⮞</button>
+    <div class="all_ann">
+      <a href="/liste" >All announces ⮞</a>
     </div>
   </div>
 

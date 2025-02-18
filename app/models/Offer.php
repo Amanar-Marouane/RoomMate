@@ -26,7 +26,7 @@ class Offer extends Announce
         $equipement = "",
         $capacites = "",
         $galorie = [],
-        $title=""
+        $title = ""
     ) {
 
         parent::__construct($type, $localisation, $address, $description, $budget, $available_at);
@@ -78,7 +78,7 @@ class Offer extends Announce
             $this->capacite_accueil = $capacite_accueil,
             $this->announce_type = $type,
             $this->galorie = $galorie,
-            $this->title=$title
+            $this->title = $title
         ];
     }
 
@@ -120,17 +120,18 @@ class Offer extends Announce
                 $db->query($querypicture, $parametres);
             }
 
-            $this->pdo->commit();
-            return "Annonce ajoutée avec succès !";
+
+            return $this->pdo->commit();
         } catch (PDOException $e) {
             $this->pdo->rollback();
             return "Erreur: " . $e->getMessage();
         }
     }
 
-    
-    public function getoffer($announce_id){
-        $query="SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
+
+    public function getoffer($announce_id)
+    {
+        $query = "SELECT a.announce_id, a.address, a.localisation, a.description, a.title,
                         a.available_at, a.announce_type, a.budget, a.regles_cohabitation, a.is_reported,
                         a.criteres_colocataire, a.capacite_accueil, a.equipements, 
                         a.zones_souhaitees, a.demand_type, a.move_in_date,
@@ -138,18 +139,62 @@ class Offer extends Announce
                         FROM announce a 
                         JOIN users u ON a.user_id = u.user_id WHERE a
                         .announce_id = ? ";
-        $params=[$announce_id];
+        $params = [$announce_id];
         $db = $this->pdo;
-        return $db->fetchAll($query, $params );
-      }
+        return $db->fetchAll($query, $params);
+    }
 
-      public function getGalerie($announce_id){
-          $query="SELECT m.media,m.media_id, a.announce_id FROM announce_media m LEFT JOIN announce a 
+    public function getGalerie($announce_id)
+    {
+        $query = "SELECT m.media,m.media_id, a.announce_id FROM announce_media m LEFT JOIN announce a 
          ON m.announce_id=a.announce_id WHERE m.announce_id=?";
-         $params=[$announce_id];
-         $db = $this->pdo;
-         $test = $db->fetchAll($query, $params );
-       
-         return $test;
-      }
+        $params = [$announce_id];
+        $db = $this->pdo;
+        $test = $db->fetchAll($query, $params);
+
+        return $test;
+    }
+
+    public function update_offer(
+        $announce_id,
+        $title,
+        $description,
+        $localisation,
+        $address,
+        $available_at,
+        $budget,
+        $criteres_colocataires,
+        $regle_cohabitation,
+        $capacite_accueil,
+        $equipement
+    ) {
+        $query = "UPDATE announce SET 
+                    title = ? ,
+                    description = ?,
+                    localisation = ?,
+                    address = ?,
+                    available_at = ?,
+                    budget = ?,
+                    criteres_colocataire = ?,
+                    regles_cohabitation = ?,
+                    capacite_accueil = ?,
+                    equipements = ?
+                    WHERE announce_id = ? ";
+        $params = [
+            $title,
+            $description,
+            $localisation,
+            $address,
+            $available_at,
+            $budget,
+            $criteres_colocataires,
+            $regle_cohabitation,
+            $capacite_accueil,
+            $equipement,
+            $announce_id
+        ];
+
+        $db = $this->pdo;
+        return $db->query($query, $params);
+    }
 }

@@ -12,7 +12,7 @@ class Demand extends Announce
   protected $pdo;
 
   private $move_in_date;
-  
+
   public function __construct(
     $type = "",
     $localisation = "",
@@ -49,7 +49,7 @@ class Demand extends Announce
 
     ];
   }
-  public function setAttribut($type, $localisation, $address, $description, $budget, $available_at, $zones_souhaitees, $demand_type, $move_in_date,$title)
+  public function setAttribut($type, $localisation, $address, $description, $budget, $available_at, $zones_souhaitees, $demand_type, $move_in_date, $title)
   {
     return [
       $this->localisation = $localisation,
@@ -88,9 +88,7 @@ class Demand extends Announce
       $this->title
     ];
     $db = $this->pdo;
-    $db->query($query, $params);
-
-    return "Annonce créée avec succès !";
+    return $db->query($query, $params);
   }
   public function getdemand($announce_id)
   {
@@ -115,15 +113,16 @@ class Demand extends Announce
     $stmt = "SELECT announce.*, users.full_name, users.photo, users.origin_city
             FROM announce
             JOIN users ON users.user_id = announce.user_id
-            WHERE title LIKE ? AND description LIKE ?";
+            WHERE (title LIKE ? OR description LIKE ?)";
+
     $params = ["%$search%", "%$search%"];
 
-    if (!empty($min_budget)) {
+    if (!is_null($min_budget)) {
       $stmt .= " AND budget >= ?";
       $params[] = $min_budget;
     }
 
-    if (!empty($max_budget)) {
+    if (!is_null($max_budget)) {
       $stmt .= " AND budget <= ?";
       $params[] = $max_budget;
     }
@@ -134,7 +133,8 @@ class Demand extends Announce
     }
 
     if (!empty($available_at)) {
-      $stmt .= " AND available_at <= ?";
+      $available_at = implode('-', array_reverse(explode('-', $available_at)));
+      $stmt .= " AND available_at >= ?";
       $params[] = $available_at;
     }
 
@@ -143,8 +143,46 @@ class Demand extends Announce
       $params[] = $type;
     }
 
-    $results = $this->pdo->fetchAll($stmt, $params);
+    return $this->pdo->fetchAll($stmt, $params) ?: [];
+  }
 
-    return $results ?: [];
+  public function update_demande(
+    $announce_id,
+    $title,
+    $description,
+    $localisation,
+    $address,
+    $available_at,
+    $budget,
+    $move_in_date,
+    $zones_souhaitees,
+    $demand_type
+  ) {
+    $query = "UPDATE announce SET 
+                title = ? ,
+                description = ?,
+                localisation = ?,
+                address = ?,
+                available_at = ?,
+                budget = ?,
+                move_in_date = ?,
+                zones_souhaitees = ?,
+                demand_type = ?
+                WHERE announce_id = ? ";
+    $params = [
+      $title,
+      $description,
+      $localisation,
+      $address,
+      $available_at,
+      $budget,
+      $move_in_date,
+      $zones_souhaitees,
+      $demand_type,
+      $announce_id
+    ];
+
+    $db = $this->pdo;
+    return $db->query($query, $params);
   }
 }

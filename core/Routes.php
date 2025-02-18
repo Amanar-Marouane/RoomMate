@@ -18,7 +18,7 @@ $router->route("post", "login", new UserController, "login");
 
 $router->route("get", "logout", new UserController, "logout")->only("get", "auth");
 
-$router->route("get", "home", new UserController, "showHomePage")->only("get", "auth");
+$router->route("get", "home", new AnnonceController, "showHomePage")->only("get", "auth");
 $router->route("get", "profile", new UserController, "showProfile")->only("get", "auth");
 
 $router->route("get", "message/{user_id}", new MessageController, "message")->only("get", "auth");
@@ -41,7 +41,10 @@ $router->route("post", "initialpsswd", new UserController, "restartPsswd");
 $router->route("post", "admin/reports/delete", new AdminController, "deleteReport")->only("post", "admin");
 $router->route("post", "admin/reports/ignorerreport", new AdminController, "ignorerReport")->only("post", "admin");
 $router->route("post", "annonce/report", new AnnonceController, "addToReport")->only("post", "student");
+$router->route("get", "admin/reports", new AdminController, "showViewReports")->only("get", "admin");
 
+$router->route("get", "profile/updateannounce/{announce_id}", new AnnonceController, "updateAnnouce")->only("get","student");
+$router->route("post", "profile/updateannounce", new AnnonceController, "updateAnnouceForm")->only("post","student");
 
 $router->route("get", "annonce", new AnnonceController, "showAnnonce")->only("get", "auth");
 
@@ -60,3 +63,8 @@ $router->route("get", "liste", new AnnonceController, "details")->only("get", "a
 $router->route("get", "demande", new AnnonceController, "getdemande")->only("get", "auth");
 $router->route("get", "offer", new AnnonceController, "getOffer")->only("get", "auth");
 // $router->route("get","offer", new AnnonceController, " getphotos");
+
+
+
+$router->route("get", "all", new AnnonceController, "show_all");
+

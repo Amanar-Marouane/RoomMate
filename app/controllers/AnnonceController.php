@@ -142,6 +142,7 @@ class AnnonceController
                         $title
                     );
                     $annonce = $this->offer->create_annonce($studentid);
+                    header("Location: /profile");
                 } else {
                     echo "Ceci est une demande.";
                     echo " annonce" . $type;
@@ -159,6 +160,7 @@ class AnnonceController
                         $title
                     );
                     $annonce = $this->demand->create_annonce($studentid);
+                    header("Location: /profile");
                 }
             } else {
                 echo "Le type d'annonce est invalide.";
@@ -287,12 +289,93 @@ class AnnonceController
                 $info = $this->demand->ignorerReport($ignorer, $id_announce);
                 if ($info && $type === 'Demande') {
                     header("location: /demande?demand_id=$id_announce");
-                }
-                elseif ($info && $type === 'Offre') {
+                } elseif ($info && $type === 'Offre') {
                     header("location: /offer?offer_id=$id_announce");
                 }
             }
         }
     }
 
+    public function updateAnnouce($announce_id)
+    {
+        $announce = $this->demand->getAnnounce($announce_id);
+        extract($announce);
+        include __DIR__ . "/../views/updateAnnonce.view.php";
+    }
+
+    public function updateAnnouceForm()
+    {
+        if (isset($_POST['saveUpdate'])) {
+
+            $type = isset($_POST['type']) ? $_POST['type'] : "";
+            $announce_id = isset($_POST['announce_id']) ? $_POST['announce_id'] : "";
+            $title = isset($_POST['titre']) ? $_POST['titre'] : "";
+            $description = isset($_POST['description']) ? $_POST['description'] : "";
+            $localisation = isset($_POST['localisation']) ? $_POST['localisation'] : "";
+            $address = isset($_POST['address']) ? $_POST['address'] : "";
+            $available_at = isset($_POST['available_at']) ? $_POST['available_at'] : null;
+            $budget = isset($_POST['budget']) ? $_POST['budget'] : 0;
+            $move_in_date = isset($_POST['move_in_date']) ? $_POST['move_in_date'] : null;
+            $zones_souhaitees = isset($_POST['zones_souhaitees']) ? $_POST['zones_souhaitees'] : "";
+            $demand_type = isset($_POST['demand_type']) ? $_POST['demand_type'] : "";
+            $capacite_accueil = isset($_POST['capacite_accueil']) ? $_POST['capacite_accueil'] : 0;
+            $criteres_colocataires = isset($_POST['criteres_colocataires']) ? $_POST['criteres_colocataires'] : "";
+            $regle_cohabitation = isset($_POST['regle_cohabitation']) ? $_POST['regle_cohabitation'] : "";
+            $equipement = isset($_POST['equipement']) ? $_POST['equipement'] : "";
+            // $studentid = $_SESSION['user_id'];
+
+            if (!empty($type)) {
+                $annonce = '';
+                if ($type === "Offre") {
+
+                    $annonce = $this->offer->update_offer(
+                        $announce_id,
+                        $title,
+                        $description,
+                        $localisation,
+                        $address,
+                        $available_at,
+                        $budget,
+                        $criteres_colocataires,
+                        $regle_cohabitation,
+                        $capacite_accueil,
+                        $equipement
+                    );
+                } else {
+                    $annonce = $this->demand->update_demande(
+                        $announce_id,
+                        $title,
+                        $description,
+                        $localisation,
+                        $address,
+                        $available_at,
+                        $budget,
+                        $move_in_date,
+                        $zones_souhaitees,
+                        $demand_type
+                    );
+                }
+
+                if ($annonce) {
+                    header("location: /profile");
+                } else {
+                    header("location: /profile/updateannounce/$announce_id");
+                }
+            } else {
+                echo "Le type d'annonce est invalide.";
+            }
+        } else {
+            echo "nothing";
+        }
+    }
+    public function showHomePage()
+    {
+        $announces = $this->offer->five_announce();
+        extract($announces);
+        $dotenv = Dotenv::createImmutable(__DIR__ . "/../../core/");
+        $dotenv->load();
+        extract($_ENV);
+
+        include __DIR__ . '/../views/homePage.php';
+    }
 }

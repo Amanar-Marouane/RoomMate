@@ -31,10 +31,7 @@ class UserController
         include __DIR__ . "/../views/profile.view.php";
     }
 
-    public function showHomePage()
-    {
-        include __DIR__ . '/../views/homePage.php';
-    }
+    
 
     // show register page 
     public function showRegister($data = [])
@@ -145,8 +142,8 @@ class UserController
             // Validate email domain
             if (!empty($data['email'])) {
                 $emailDomain = substr(strrchr($data['email'], "@"), 1);
-                if ($emailDomain !== 'gmail.com') {
-                    $data['domain_err'] = 'Please use a valid email address: "...@youcode.ma"';
+                if ($emailDomain !== 'student.youcode.ma') {
+                    $data['domain_err'] = 'Please use a valid email address: "...@student.youcode.ma"';
                 }
             }
 
@@ -305,6 +302,7 @@ class UserController
 
                 if ($user) {
                     $token = bin2hex(random_bytes(16));
+
                     $expiry = date("Y-m-d H:i:s", strtotime("+2 hour"));
 
                     $res = $this->user->addToken($email, $token, $expiry);
@@ -313,7 +311,7 @@ class UserController
                         $resetLink = "http://localhost:8000/initialpsswd?token=$token";
                         $sujet = "Réinitialisation de mot de passe";
                         $body = "<p>Bonjour,</p>  
-                        <p>Cliquez sur ce lien pour réinitialiser votre mot de passe : <a href='$resetLink'>Click ici</a></p>  
+                        <p>Cliquez sur ce lien pour réinitialiser votre mot de passe $resetLink : <a href='$resetLink'>Click ici</a></p>  
                         <p>Cordialement,<br>  
                         <strong>Rommate</strong></p>";
 
